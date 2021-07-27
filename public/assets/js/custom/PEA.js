@@ -136,7 +136,7 @@ $(document).ready(function() {
         },
         columns   :[
             {data:"ControlNum",render:function(data, type, row){
-                return '<a href="javascript:void(0) "class="text-info pearate">'+row.ControlNum+'</a>'}},
+                return '<a href="'+WebURL+'/PEA-Filed/PEA-rating/'+row.Filed_ID+'"class="text-info">'+row.ControlNum+'</a>'}},
             {data:"Employee_ID"},
             {data:"FullName"},
             {data:"Position"},
@@ -165,6 +165,90 @@ $(document).ready(function() {
     $('body').on('click','.updatePEA',function(e){
         var data = tbl_pea_inprocess.row( $(this).parents('tr') ).data();
         console.log(data);
+
+        var FiledID = data['Filed_ID'];
+        $('#FiledID').val(FiledID);
+
+        console.log(FiledID);
+
+        $('#modal_edit_pea').modal('show');
+        $('#edit_pea_employee').select2({
+            dropdownParent: $('#modal_edit_pea'),
+            placeholder: "Select Employee"
+
+        });
+
+
+        $.ajax({
+            url:WebURL+'/get-emp',
+            type:'GET',
+            dataType: 'text',
+            cache: false,
+            success: function (data) {
+                $('#edit_pea_employee').html(data);
+            },
+            error: function () {
+                console.log('error');
+            }
+        })
+
+    })
+
+    $('#btn_update_pea').on('click',function(e){
+        var error = false;
+        var FiledID = $('#FiledID').val();
+        var EmpID = $('#edit_pea_employee').val();
+
+        console.log(EmpID);
+
+        if(error == false)
+        {
+            swal.fire({
+                title: 'Are you sure?',
+                text: "Updating  PEA",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                showLoaderOnConfirm: true,
+                allowOutsideClick: false,
+                preConfirm:(done) =>
+                {
+                    return new Promise(function(resolve, reject) {
+                    Swal.getCancelButton().setAttribute('disabled', '')
+                    $.post(WebURL + '/PEA-update',{EmpID:EmpID,FiledID:FiledID},function(data){
+                        if(data.num>=0)
+                        {
+                            swal.fire({
+                                title: 'Success',
+                                text: data.msg,
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                                }).then(function (result) {
+                                    if (true) {
+                                        $('#modal_edit_pea').modal('hide');
+                                        tbl_pea_inprocess.ajax.reload( null, false );
+                                    }
+                                })
+                        }
+                        else
+                        {
+                            swal.fire({
+                                title: "Warning!",
+                                text: data.msg,
+                                icon: "warning",
+                                confirmButtonText: "Ok",
+                                confirmButtonColor: '#6658dd',
+                                allowOutsideClick: false,
+                            });
+                        }
+                    })
+                });
+                }
+            })
+        }
+
     })
 
 

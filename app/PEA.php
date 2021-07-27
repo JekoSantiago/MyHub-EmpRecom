@@ -21,4 +21,9 @@ class PEA extends Model
     {
         return DB::select('sp_PEA_Filed_Insert ?,?,?' , $data);
     }
+
+    public static function updatePEA($data)
+    {
+        return DB::select('sp_PEA_Filed_Update ?,?,?,?', $data);
+    }
 }

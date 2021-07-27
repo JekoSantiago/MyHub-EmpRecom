@@ -26,7 +26,6 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex flex-wrap">
-                        <div class="form-group"></div>
                         <input type="hidden" name="_token" id="globalToken" value="{{csrf_token()}}" />
                             <div class="row">
                                 <div class="col-md-12">
@@ -116,6 +115,7 @@
 </div>
 
 @include('pages.PEA.in-process.modal.new_pea')
+@include('pages.PEA.in-process.modal.edit_pea')
 @endsection
 @section('js')
 <script src="{{ URL::asset('assets/js/custom/PEA.js')}}"></script>

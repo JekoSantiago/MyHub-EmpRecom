@@ -17,7 +17,7 @@
 
                     <div class="text-center">
                         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                        <button type="button" id="btn_add_pea" class="btn btn-success">Save</button>
+                        <button type="button" id="btn_update_pea" class="btn btn-info">Update</button>
                     </div>
                 </form>
 

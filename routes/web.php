@@ -39,6 +39,8 @@ Route::get('/get-emp','OptionsController@getEmployeePEA');
 //PEA
 Route::post('/PEA-get','PEAController@getPEAFiled');
 Route::post('/PEA-insert','PEAController@insertPEA');
+Route::post('/PEA-update','PEAController@updatePEA');
+Route::get('/PEA-Filed/PEA-rating/{id}','PEAController@ratePEA');
 
 Route::get('/zxc',function(){
     DD(Myhelper::decrypt(Session::get('Employee_ID')));
