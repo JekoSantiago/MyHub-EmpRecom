@@ -60,6 +60,7 @@ class AuthController extends Controller
                 Session::put('Email',            MyHelper::encrypt($userDetails[0]->Email));
                 Session::put('Location_ID',      MyHelper::encrypt($userDetails[0]->Location_ID));
                 Session::put('Location',         MyHelper::encrypt($userDetails[0]->Location));
+                Session::put('PositionLevel_ID', MyHelper::encrypt($userDetails[0]->PositionLevel_ID));
                 Session::save();
             return redirect(route('home'));
             }

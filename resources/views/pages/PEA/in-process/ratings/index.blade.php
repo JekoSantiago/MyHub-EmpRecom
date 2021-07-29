@@ -17,9 +17,9 @@
 
 <div class="row">
     <div class="col-lg-11">
-        <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C8F4F;">PEA</button>
-        <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #A7B941;">EP</button>
-        <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #A9772B;">RL</button>
+        <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C8F4F;">PEA</button> &nbsp;
+        <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #A7B941;">EP</button> &nbsp;
+        <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #A9772B;">RL</button> &nbsp;
     </div>
     <div class="col-lg-1 pt-1">
         <a href="#"><button type="button" class="btn btn-outline-secondary">Back</button></a>
@@ -74,6 +74,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <form id="form_ratings"> <input type="hidden" name="FiledID" id="FiledID" value="{{ $emp[0]->Filed_ID }}"></form>
                     <table id="tbl_emp_ratings" class="table table-bordered w-100 nowrap">
                         <tbody>
                             <tr>
@@ -116,25 +117,19 @@
                                                 {{ $opval->Percentage }}%
                                             </td>
                                             <td>
-                                                <fieldset id="{{ $fval->Factor_ID }}">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="1M_{{ $opval->Factor_ID }}" id="" value="{{ $opval->Percentage }}" >
+                                                    <input class="form-check-input rad_{{ $opval->Factor_ID }}" type="radio" form="form_ratings" name="M1_{{ $opval->Factor_ID }}"  value="{{ $opval->RatingOption_ID }}" @foreach($rating as $rate) @if($opval->RatingOption_ID == $rate->First_ID) checked @endif @endforeach>
                                                 </div>
-                                                </fieldset>
                                             </td>
                                             <td>
-                                                <fieldset id="{{ $fval->Factor_ID }}">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="2M_{{ $opval->Factor_ID }}" id="" value="{{ $opval->Percentage }}" >
+                                                        <input class="form-check-input rad_{{ $opval->Factor_ID }}" type="radio" form="form_ratings" name="M2_{{ $opval->Factor_ID }}" value="{{ $opval->RatingOption_ID }}"@foreach($rating as $rate) @if($opval->RatingOption_ID == $rate->Second_ID) checked @endif @endforeach>
                                                     </div>
-                                                </fieldset>
                                             </td>
                                             <td>
-                                                <fieldset id="{{ $fval->Factor_ID }}">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="3M_{{ $opval->Factor_ID }}" id="" value="{{ $opval->Percentage }}" >
+                                                        <input class="form-check-input rad_{{ $opval->Factor_ID }}" type="radio" form="form_ratings" name="M3_{{ $opval->Factor_ID }}"  value="{{ $opval->RatingOption_ID }}"@foreach($rating as $rate) @if($opval->RatingOption_ID == $rate->Third_ID) checked @endif @endforeach >
                                                     </div>
-                                                </fieldset>
                                             </td>
                                         </tr>
                                     @endif
@@ -144,7 +139,7 @@
                             @endforeach
                             <tr>
                                 <td colspan="5" style="text-align: right">
-                                    <h4 class="pr-4">TOTAL AVERAGE: </h4>
+                                    <h4 class="pr-4">TOTAL AVERAGE: <span id="AvePoint">{{ $emp[0]->TotalPoint ? : 0 }}</span></h4>
                                 </td>
                             </tr>
                         </tbody>
@@ -168,7 +163,7 @@
                                 </td>
                             </tr>
                         @foreach ( $scale as $sc )
-                            <tr @if ($sc->RatingScale_ID == 4) style="background-color: #fc5252; color:#fff" @endif>
+                            <tr id="r_{{ $sc->RatingScale_ID }}">
                                 <td>
                                     {{ $sc->PercentRange }}
                                 </td>
@@ -191,22 +186,67 @@
             <div class="card">
                 <div class="card-body">
                     <table id="tbl_comment" class="table table-bordered w-100 nowrap">
-                        <tbody>
+                        <thead>
                             <tr>
+                                <th style="width: 5%"></th>
                                 <th>Month</th>
                                 <th>Evaluator Comment</th>
                                 <th>Evaluator Name</th>
                                 <th>Date Comment</th>
                             </tr>
-                            <tr>
+                        </thead>
+                        <tbody>
+                            {{-- <tr>
+                                <td>
+                                    @if ($comment[0]->Filed_ID == NULL)
+                                        <a href="javascript:void(0)" id="m1_comment" class="text-info">
+                                            <i data-feather="message-square"></i>
+                                        </a>
+                                    @else
+                                    <a href="javascript:void(0)" id="m1_update" class="text-info">
+                                        <i data-feather="edit"></i>
+                                    </a>
+                                    @endif
+                                </td>
                                 <td>1st</td>
+                                <td>{{ $comment[0]->EvalComment }}</td>
+                                <td>{{ $comment[0]->EvalFullName}}</td>
+                                <td>{{ $comment[0]->DateComment }}</td>
                             </tr>
                             <tr>
+                                <td>
+                                    @if ($comment[1]->Filed_ID == NULL)
+                                        <a href="javascript:void(0)" id="m2_comment" class="text-info">
+                                            <i data-feather="message-square"></i>
+                                        </a>
+                                    @else
+                                    <a href="javascript:void(0)" id="m2_update" class="text-info">
+                                        <i data-feather="edit"></i>
+                                    </a>
+                                    @endif
+                                </td>
                                 <td>2nd</td>
+                                <td>{{ $comment[1]->EvalComment }}</td>
+                                <td>{{ $comment[1]->EvalFullName}}</td>
+                                <td>{{ $comment[1]->DateComment }}</td>
                             </tr>
                             <tr>
+                                <td>
+                                    @if ($comment[2]->Filed_ID == NULL)
+                                        <a href="javascript:void(0)" id="m3_comment" class="text-info">
+                                            <i data-feather="message-square"></i>
+                                        </a>
+                                    @else
+                                    <a href="javascript:void(0)" id="m3_update" class="text-info">
+                                        <i data-feather="edit"></i>
+                                    </a>
+                                    @endif
+                                </td>
                                 <td>3rd</td>
-                            </tr>
+                                <td>{{ $comment[2]->EvalComment }}</td>
+                                <td>{{ $comment[2]->EvalFullName}}</td>
+                                <td>{{ $comment[2]->DateComment }}</td>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
@@ -276,7 +316,7 @@
         </div>
     </div>
 </div>
-
+@include('pages.PEA.in-process.modal.comment')
 @endsection
 @section('js')
 <script src="{{ URL::asset('assets/js/custom/ratings.js')}}"></script>

@@ -41,9 +41,16 @@ Route::post('/PEA-get','PEAController@getPEAFiled');
 Route::post('/PEA-insert','PEAController@insertPEA');
 Route::post('/PEA-update','PEAController@updatePEA');
 Route::get('/PEA-Filed/PEA-rating/{id}','PEAController@ratePEA');
+Route::post('/PEA-Rate-insert','PEAController@insertRatings');
+Route::post('/PEA-Rate-update','PEAController@updateRatings');
+Route::post('/PEA-comment-get/{id}','PEAController@monthlyComments');
+Route::post('/PEA-comment-insert','PEAController@insertMonthlyComments');
+Route::post('/PEA-comment-update','PEAController@updateMonthlyComments');
+
+
 
 Route::get('/zxc',function(){
-    DD(Myhelper::decrypt(Session::get('Employee_ID')));
+    DD(Myhelper::decrypt(Session::get('Department_ID')));
 });
 
 

@@ -26,4 +26,39 @@ class PEA extends Model
     {
         return DB::select('sp_PEA_Filed_Update ?,?,?,?', $data);
     }
+
+    public static function getRatings($data)
+    {
+        return DB::select('sp_PEA_EmpRate_Get ?', $data);
+    }
+
+    public static function insertRatings($data)
+    {
+        return DB::select('sp_PEA_EmpRate_Insert ?,?,?,?,?,?' , $data);
+    }
+
+    public static function updateRatings($data)
+    {
+        return DB::select('sp_PEA_EmpRate_Update ?,?,?,?,?,?' , $data);
+    }
+
+    public static function refreshRatings($data)
+    {
+        return DB::select('sp_PEA_Rating_Refresh_Get ?' , $data);
+    }
+
+    public static function getMonthlyComment($data)
+    {
+        return DB::select('sp_PEA_MonthlyApproved_Get ?' , $data);
+    }
+
+    public static function insertMonthlyComment($data)
+    {
+        return DB::select('sp_PEA_MonthlyApproved_Insert ?,?,?,?,?,?' , $data);
+    }
+
+    public static function updateMonthlyComment($data)
+    {
+        return DB::select('sp_PEA_MonthlyApproved_Update ?,?,?,?,?,?,?' , $data);
+    }
 }
