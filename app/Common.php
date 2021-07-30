@@ -25,5 +25,10 @@ class Common extends Model
         return DB::select('sp_Position_get');
    }
 
+   public static function getLocation()
+   {
+        return DB::select('sp_Location_get');
+   }
+
 
 }

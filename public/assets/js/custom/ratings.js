@@ -14,6 +14,7 @@ $(document).ready(function() {
     }
     else
     {
+        console.log(isHR,isHRRated);
         if (isHR==1)
         {
             $(".rad_1").attr('disabled',true);
@@ -21,6 +22,13 @@ $(document).ready(function() {
             $(".rad_3").attr('disabled',true);
             $(".rad_4").attr('disabled',false);
             $(".rad_5").attr('disabled',true);
+            $(".m_comment").hide();
+            $(".m_update").hide();
+            $("#PRA").attr('disabled',true);
+            $("#SnE").attr('disabled',true);
+            $("#SAR").attr('disabled',true);
+            $("#recom_letter").attr('disabled',true);
+            $("#btnSaveEval").hide();
         }
         else
         {
@@ -34,11 +42,11 @@ $(document).ready(function() {
             }
             else
             {
-                $(".rad_1").attr('disabled',false);
-                $(".rad_2").attr('disabled',false);
-                $(".rad_3").attr('disabled',false);
-                $(".rad_4").attr('disabled',false);
-                $(".rad_5").attr('disabled',false);
+                $(".rad_1").attr('disabled',true);
+                $(".rad_2").attr('disabled',true);
+                $(".rad_3").attr('disabled',true);
+                $(".rad_4").attr('disabled',true);
+                $(".rad_5").attr('disabled',true);
             }
 
         }
@@ -127,6 +135,27 @@ $(document).ready(function() {
                         $('#AvePoint').text(data.ave);
                         rateScale();
                     }
+                    else if(data.num==-1)
+                    {
+                        $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
+                            if(data.num>=0)
+                            {
+                                $('#AvePoint').text(data.ave);
+                                rateScale();
+                            }
+                            else
+                            {
+                                swal.fire({
+                                    title: "Warning!",
+                                    text: data.msg,
+                                    icon: "warning",
+                                    confirmButtonText: "Ok",
+                                    confirmButtonColor: '#6658dd',
+                                    allowOutsideClick: false,
+                                });
+                            }
+                        })
+                    }
                     else
                     {
                         swal.fire({
@@ -178,6 +207,27 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                    }
+                    else if(data.num==-1)
+                    {
+                        $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
+                            if(data.num>=0)
+                            {
+                                $('#AvePoint').text(data.ave);
+                                rateScale();
+                            }
+                            else
+                            {
+                                swal.fire({
+                                    title: "Warning!",
+                                    text: data.msg,
+                                    icon: "warning",
+                                    confirmButtonText: "Ok",
+                                    confirmButtonColor: '#6658dd',
+                                    allowOutsideClick: false,
+                                });
+                            }
+                        })
                     }
                     else
                     {
@@ -231,6 +281,27 @@ $(document).ready(function() {
                         $('#AvePoint').text(data.ave);
                         rateScale();
                     }
+                    else if(data.num==-1)
+                    {
+                        $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
+                            if(data.num>=0)
+                            {
+                                $('#AvePoint').text(data.ave);
+                                rateScale();
+                            }
+                            else
+                            {
+                                swal.fire({
+                                    title: "Warning!",
+                                    text: data.msg,
+                                    icon: "warning",
+                                    confirmButtonText: "Ok",
+                                    confirmButtonColor: '#6658dd',
+                                    allowOutsideClick: false,
+                                });
+                            }
+                        })
+                    }
                     else
                     {
                         swal.fire({
@@ -262,6 +333,27 @@ $(document).ready(function() {
                         $('#AvePoint').text(data.ave);
                         rateScale();
                     }
+                    else if(data.num==-1)
+                    {
+                        $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
+                            if(data.num>=0)
+                            {
+                                $('#AvePoint').text(data.ave);
+                                rateScale();
+                            }
+                            else
+                            {
+                                swal.fire({
+                                    title: "Warning!",
+                                    text: data.msg,
+                                    icon: "warning",
+                                    confirmButtonText: "Ok",
+                                    confirmButtonColor: '#6658dd',
+                                    allowOutsideClick: false,
+                                });
+                            }
+                        })
+                    }
                     else
                     {
                         swal.fire({
@@ -282,6 +374,27 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                    }
+                    else if(data.num==-1)
+                    {
+                        $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
+                            if(data.num>=0)
+                            {
+                                $('#AvePoint').text(data.ave);
+                                rateScale();
+                            }
+                            else
+                            {
+                                swal.fire({
+                                    title: "Warning!",
+                                    text: data.msg,
+                                    icon: "warning",
+                                    confirmButtonText: "Ok",
+                                    confirmButtonColor: '#6658dd',
+                                    allowOutsideClick: false,
+                                });
+                            }
+                        })
                     }
                     else
                     {
@@ -335,6 +448,27 @@ $(document).ready(function() {
                         $('#AvePoint').text(data.ave);
                         rateScale();
                     }
+                    else if(data.num==-1)
+                    {
+                        $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
+                            if(data.num>=0)
+                            {
+                                $('#AvePoint').text(data.ave);
+                                rateScale();
+                            }
+                            else
+                            {
+                                swal.fire({
+                                    title: "Warning!",
+                                    text: data.msg,
+                                    icon: "warning",
+                                    confirmButtonText: "Ok",
+                                    confirmButtonColor: '#6658dd',
+                                    allowOutsideClick: false,
+                                });
+                            }
+                        })
+                    }
                     else
                     {
                         swal.fire({
@@ -369,7 +503,14 @@ $(document).ready(function() {
                 {render:function(data,type,row)
                 {
                     var icon = (row.EvalComment == null) ? '<a href="javascript:void(0)" class="text-info m_comment"> <i class="mdi mdi-24px mdi-comment-outline"></i> <a>' : '<a href="javascript:void(0)" class="text-info m_update"> <i class="mdi mdi-24px mdi-comment-processing-outline"></i> <a>'
-                    return  icon ;
+                    if(isHR == 0)
+                    {
+                        return  icon ;
+                    }
+                    else
+                    {
+                        return '';
+                    }
 
                 }},
                 {data:"MonthDef"},
@@ -563,6 +704,107 @@ $(document).ready(function() {
         $('#monthly_comment').val('');
     });
 
+
+    $('#btnSaveEval').on('click',function(){
+        var error = false;
+        var recom = $('#recom_letter').val();
+        var pra = $('#PRA').val();
+        var sne = $('#SnE').val();
+        var sar = $('#SAR').val();
+
+        if (recom.length <= 0)
+        {
+            error = true;
+            $('#recom_letter').addClass('error-input');
+            $('#recom_letter_error').show();
+        }
+        else
+        {
+            $('#recom_letter').removeClass('error-input');
+            $('#recom_letter_error').hide();
+        }
+
+        if (pra.length <= 0)
+        {
+            error = true;
+            $('#PRA').addClass('error-input');
+            $('#PRA_error').show();
+        }
+        else
+        {
+            $('#PRA').removeClass('error-input');
+            $('#PRA_error').hide();
+        }
+
+        if (sne.length <= 0)
+        {
+            error = true;
+            $('#SnE').addClass('error-input');
+            $('#SnE_error').show();
+        }
+        else
+        {
+            $('#SnE').removeClass('error-input');
+            $('#SnE_error').hide();
+        }
+
+        if (sar.length <= 0)
+        {
+            error = true;
+            $('#SAR').addClass('error-input');
+            $('#SAR_error').show();
+        }
+        else
+        {
+            $('#SAR').removeClass('error-input');
+            $('#SAR_error').hide();
+        }
+
+        if(error == false)
+        {
+            var formdata = $('#form_emp_profile').serialize();
+            swal.fire({
+                title: 'Are you sure?',
+                text: "Saving the evaluation",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                showLoaderOnConfirm: true,
+                allowOutsideClick: false,
+                preConfirm:(done) =>
+                {
+                    return new Promise(function(resolve, reject) {
+                    Swal.getCancelButton().setAttribute('disabled', '')
+                    $.post(WebURL + '/PEA-recom-update',formdata,function(data){
+                    if(data.num>=0)
+                        {
+                            swal.fire({
+                                title: 'Success',
+                                text: data.msg,
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                                })
+                        }
+                        else
+                        {
+                            swal.fire({
+                                title: "Warning!",
+                                text: data.msg,
+                                icon: "warning",
+                                confirmButtonText: "Ok",
+                                confirmButtonColor: '#6658dd',
+                                allowOutsideClick: false,
+                            });
+                        }
+                    })
+                });
+                }
+            })
+        }
+
+    })
 
 
 

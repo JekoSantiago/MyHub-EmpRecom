@@ -30,6 +30,24 @@ class PageController extends Controller
         return view('pages.PEA.in-process.index',$data);
     }
 
+    public function PEAapproval(Request $request)
+    {
+        $data['title'] ="PEA Approval";
+
+        $paramPEAApproval['forApproval']      =  $request->input('forApproval') ? : 0;
+        $paramPEAApproval['controlNo']        =  $request->input('controlNo') ? : '';
+        $paramPEAApproval['employeeName']        =  $request->input('employeeName') ? : '';
+        $paramPEAApproval['position']        =  $request->input('position') ? : 0;
+        $paramPEAApproval['location']        =  $request->input('location') ? : 0;
+        $paramPEAApproval['fdatestart']        =  $request->input('fdatestart') ? : '';
+        $paramPEAApproval['fdateend']        =  $request->input('fdateend') ? : '';
+        $paramPEAApproval['hdatestart']        =  $request->input('hdatestart') ? : '';
+        $paramPEAApproval['hdateend']        =  $request->input('hdateend') ? : '';
+
+        $data['paramPEAApproval']    = $paramPEAApproval;
+        return view('pages.PEA.approval.index',$data);
+    }
+
 
 
 }

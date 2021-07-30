@@ -22,8 +22,30 @@ class PEAController extends Controller
             $request->position ? : 0
         ];
 
-        // dd($param);
         $data = PEA::getPEAFiled($param);
+
+        return datatables($data)->toJson();
+    }
+
+    public function getPEAApproved(Request $request)
+    {
+        $param = [
+            0,
+            MyHelper::decrypt(Session::get('Employee_ID')),
+            $request->forApproval ? : 0,
+            $request->controlNo ? : null,
+            $request->position ? : 0,
+            $request->location ? : 0,
+            $request->employeeName ? : null,
+            $request->fdatestart ? : '1900-01-01',
+            $request->fdateend ? : '1900-01-01',
+            $request->hdatestart ? : '1900-01-01',
+            $request->hdateend ? : '1900-01-01'
+
+        ];
+        // dd($param);
+        $data = PEA::getPEAApproval($param);
+        // dd($data);
 
         return datatables($data)->toJson();
     }
@@ -75,9 +97,10 @@ class PEAController extends Controller
             0
         ];
         $data['title'] = 'Ratings';
-        $emp = PEA::getPEAFiled($param);
+        $emp = PEA::getPEAFiled2($param);
         $rating = PEA::getRatings([$id]);
         $comment = PEA::getMonthlyComment([$id]);
+        $recom = PEA::getRecomLetter([$id]);
 
         $data['emp'] = $emp;
         $data['chapter'] = DB::select('sp_chapter_get');
@@ -86,10 +109,8 @@ class PEAController extends Controller
         $data['scale'] = DB::select('sp_PEA_RatingScale_Get');
         $data['rating'] = $rating;
 
-
-
-
-        $isHRRated = $emp[0]->HRRateStatus;
+        // dd($emp);
+        $isHRRated = (intval($emp[0]->HRRateStatus));
         $isHR = (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID')) ? 1:0;
         $countCom = 0;
         foreach ($comment as $com)
@@ -239,6 +260,27 @@ class PEAController extends Controller
         $result = array('num' => $num, 'msg' => $msg);
         return $result;
     }
+
+    public function updateRecomLetter(Request $request)
+    {
+        $param = [
+            $request -> FiledIDRec,
+            $request -> recom_letter,
+            $request -> PRA,
+            $request -> SnE,
+            $request -> SAR
+        ];
+
+        $update = PEA::updateRecomLetter($param);
+
+        $num = $update[0]->Q_RETURN;
+        $msg = $update[0]->Q_MSG;
+
+        $result = array('num' => $num, 'msg' => $msg);
+        return $result;
+
+    }
+
 
 
 }

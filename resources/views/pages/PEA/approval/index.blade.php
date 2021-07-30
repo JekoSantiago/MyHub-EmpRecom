@@ -10,7 +10,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Probationary Employee Assessment</a></li>
-                        <li class="breadcrumb-item active">In-Process</li>
+                        <li class="breadcrumb-item active">Approval</li>
                     </ol>
                 </div>
                 <h4 class="page-title">Probationary Employee Assessment</h4>
@@ -29,23 +29,23 @@
                         <input type="hidden" name="_token" id="globalToken" value="{{csrf_token()}}" />
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="forRating"> Rate Status: </label> <br>
-                                    <select name="forRating" id="forRating" class="form-control">
-                                        <option value="0" @if ($paramPEAFiled['forRating'] == 0) {{ 'selected' }} @endif>For Rating</option>
-                                        <option value="1" @if ($paramPEAFiled['forRating'] == 1) {{ 'selected' }} @endif>Rated</option>
+                                    <label for="forApproval"> Approval Status: </label> <br>
+                                    <select name="forApproval" id="forApproval" class="form-control">
+                                        <option value="0" @if ($paramPEAApproval['forApproval'] == 0) {{ 'selected' }} @endif>For Approval</option>
+                                        <option value="1" @if ($paramPEAApproval['forApproval'] == 1) {{ 'selected' }} @endif>Approved</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row pl-3">
                                 <div class="col-md-12">
                                     <label for="controlNo"> Control No.: </label> <br>
-                                    <input type="text" name="controlNo" id="controlNo" value="{{$paramPEAFiled['controlNo']}}" placeholder="Control #" class="form-control">
+                                    <input type="text" name="controlNo" id="controlNo" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
                                 </div>
                             </div>
                             <div class="row pl-3">
                                 <div class="col-md-12">
                                     <label for="employeeName"> Employee Name: </label> <br>
-                                    <input type="text" name="employeeName" id="employeeName" value="{{$paramPEAFiled['employeeName']}}" placeholder="Employee" class="form-control">
+                                    <input type="text" name="employeeName" id="employeeName" value="{{$paramPEAApproval['employeeName']}}" placeholder="Employee" class="form-control">
                                 </div>
                             </div>
                             <div class="row pl-3">
@@ -56,9 +56,44 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row pl-4">
+                                <div class="col-xxl">
+                                    <label for="location"> Location: </label> <br>
+                                    <select name="location" id="location" class="form-control select2 w-150" style="width:200%">
+                                        {{-- <option value="0">-SELECT POSITION-</option> --}}
+                                    </select>
+                                </div>
+                            </div>
                             <div class="row pl-5">
                                 <div class="col-md-12 pt-3">
                                     <button type="button" id="BtnFilterSubmit" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-magnify mr-1"></i>Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap">
+                            <div class="row pl-3">
+                                <div class="col-md-12">
+                                    <label for="fdatestart"> Filed Date Start: </label> <br>
+                                    <input type="date" name="fdatestart" id="fdatestart" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row pl-3">
+                                <div class="col-md-12">
+                                    <label for="fdateend"> Filed Date End: </label> <br>
+                                    <input type="date" name="fdateend" id="fdateend" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row pl-3">
+                                <div class="col-md-12">
+                                    <label for="hdatestart"> Hired Date Start: </label> <br>
+                                    <input type="date" name="hdatestart" id="hdatestart" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row pl-3">
+                                <div class="col-md-12">
+                                    <label for="fdateend"> Hired Date End: </label> <br>
+                                    <input type="date" name="hdateend" id="hdateend" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -93,7 +128,7 @@
                             </div>
                         </div>
                     </div>
-                    <table id="tbl_pea_inprocess" class="table table-centered w-100 nowrap">
+                    <table id="tbl_pea_approval" class="table table-centered w-100 nowrap">
                         <thead>
                             <tr>
                                 <th>Control #</th>
@@ -101,8 +136,8 @@
                                 <th>Full Name</th>
                                 <th>Position</th>
                                 <th>Date Hired</th>
+                                <th>Department</th>
                                 <th>Location</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -114,8 +149,6 @@
     </div>
 </div>
 
-@include('pages.PEA.in-process.modal.new_pea')
-@include('pages.PEA.in-process.modal.edit_pea')
 @endsection
 @section('js')
 <script src="{{ URL::asset('assets/js/custom/PEA.js')}}"></script>

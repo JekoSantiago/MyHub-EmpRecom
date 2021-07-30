@@ -29,11 +29,13 @@ Route::get('/logout','AuthController@logout')->name('logout');
 // Pages
 Route::get('/home','PageController@viewHome')->name('home');
 Route::any('/PEA-Filed','PageController@PEAinProcess')->name('PEA_Filed');
+Route::any('/PEA-Approval','PageController@PEAapproval')->name('PEA_Approval');
+
 
 //Options
 Route::get('/get-pos','OptionsController@getPosition');
 Route::get('/get-emp','OptionsController@getEmployeePEA');
-
+Route::get('/get-loc','OptionsController@getLocation');
 
 
 //PEA
@@ -46,6 +48,8 @@ Route::post('/PEA-Rate-update','PEAController@updateRatings');
 Route::post('/PEA-comment-get/{id}','PEAController@monthlyComments');
 Route::post('/PEA-comment-insert','PEAController@insertMonthlyComments');
 Route::post('/PEA-comment-update','PEAController@updateMonthlyComments');
+Route::post('/PEA-recom-update','PEAController@updateRecomLetter');
+Route::post('/PEA-Approval-get','PEAController@getPEAApproved');
 
 
 

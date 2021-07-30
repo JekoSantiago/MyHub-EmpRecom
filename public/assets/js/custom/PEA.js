@@ -17,6 +17,25 @@ $(document).ready(function() {
         }
     })
 
+    $('#location').select2({
+        placeholder: "Select Location"
+    });
+
+
+    $.ajax({
+        url:WebURL+'/get-loc',
+        type:'GET',
+        dataType: 'text',
+        cache: false,
+        success: function (data) {
+            $('#location').html(data);
+        },
+        error: function () {
+            console.log('error');
+        }
+    })
+
+
 
 
     $("#modal_new_pea").on('shown.bs.modal', function () {
@@ -156,6 +175,29 @@ $(document).ready(function() {
             },
             processing:'<div class="text-center"><div class="spinner spinner-border"></div></div>'
         },
+        createdRow: function (row, data, index){
+            if(data.NumOfQuestRemain == 0) {
+                $(row).css("background-color", "#5CB1FC");
+            }
+
+            if(data.HRRateStatus == 1) {
+                $(row).css("background-color", "#E4A0AE");
+            }
+
+            if(data.AMAppDate != null && data.HRAppDate == null && data.ExecAppDate == null) {
+                $(row).css("background-color", "#FCF17F");
+            }
+
+            if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate == null) {
+                $(row).css("background-color", "#C6A0C6");
+            }
+
+            if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate != null) {
+                $(row).css("background-color", "#BAE654");
+            }
+
+
+        },
     });
 
     $('#BtnFilterSubmit').on('click', function(){
@@ -252,8 +294,89 @@ $(document).ready(function() {
     })
 
 
+    /**
+     *  Approval PEA
+     */
+
+     var tbl_pea_approval = $('#tbl_pea_approval').DataTable({
+        processing: true,
+        serverSide: true,
+        scrollX: true,
+        ajax      : {
+            url: WebURL + '/PEA-Approval-get',
+            method: 'POST',
+            data: function (data) {
+                var forRating = $('#forRating').val();
+                var controlNo = $('#controlNo').val();
+                var employeeName = $('#employeeName').val();
+                var position = $('#position').val();
+                var location = $('#location').val();
+                var fdatestart = $('#fdatestart').val();
+                var fdateend = $('#fdateend').val();
+                var hdatestart = $('#hdatestart').val();
+                var hdateend = $('#hdateend').val();
+                var token = $('#globalToken').val()
 
 
+                data.forRating = forRating;
+                data.controlNo = controlNo;
+                data.employeeName = employeeName;
+                data.position = position;
+                data.token = token;
+                data.location=location;
+                data.fdatestart = fdatestart;
+                data.fdateend = fdateend;
+                data.hdatestart = hdatestart;
+                data.hdateend = hdateend;
+
+            },
+            dataType: 'json',
+        },
+        columns   :[
+            {data:"ControlNum",render:function(data, type, row){
+                return '<a href="'+WebURL+'/PEA-Filed/PEA-rating/'+row.Filed_ID+'"class="text-info">'+row.ControlNum+'</a>'}},
+            {data:"Employee_ID"},
+            {data:"FullName"},
+            {data:"Position"},
+            {data:"DateHired"},
+            {data:"Department"},
+            {data:"LocationID", render:function(data, type, row, meta){
+                return row.LocationCode + " - " + row.Location
+            }},
+
+        ],
+        language: {
+            emptyTable: 'No data available.',
+            paginate: {
+                previous: "<i class='mdi mdi-chevron-left'>",
+                next: "<i class='mdi mdi-chevron-right'>"
+            },
+            processing:'<div class="text-center"><div class="spinner spinner-border"></div></div>'
+        },
+        createdRow: function (row, data, index){
+            if(data.NumOfQuestRemain == 0) {
+                $(row).css("background-color", "#5CB1FC");
+            }
+
+            if(data.HRRateStatus == 1) {
+                $(row).css("background-color", "#E4A0AE");
+            }
+
+            if(data.AMAppDate != null && data.HRAppDate == null && data.ExecAppDate == null) {
+                $(row).css("background-color", "#FCF17F");
+            }
+
+            if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate == null) {
+                $(row).css("background-color", "#C6A0C6");
+            }
+
+            if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate != null) {
+                $(row).css("background-color", "#BAE654");
+            }
+
+
+        },
+    });
 
 
 

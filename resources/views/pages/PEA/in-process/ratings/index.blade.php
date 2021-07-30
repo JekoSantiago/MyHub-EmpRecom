@@ -260,28 +260,58 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <h4 class="card-title text-center">Recommendation Letter Comment (must be filled up by Evaluator)</h4>
+                    <form id="form_emp_profile">
+                        <div class="form-group">
+                            <textarea name="recom_letter" id="recom_letter" cols="30" rows="10" class="form-control" placeholder="Recomendation letter...">{{ $emp[0]->RecomComment }}</textarea>
+                            <label class="invalid-feedback" id="recom_letter_error">Please fill up the field</label>
+                            <input type="hidden" name="FiledIDRec" id="FiledIDRec" value="{{ $emp[0]->Filed_ID }}">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Employee Profile (must be filled up by Evaluator)</h4>
                     <div class="form-group">
                         <div class="row">
                             <label for="PRA">
                                 Performace Results and Accomplishments
                             </label>
-                            <textarea name="PRA" id="PRA" cols="30" rows="6" class="form-control"></textarea>
+                            <textarea name="PRA" id="PRA" cols="30" rows="6" class="form-control" form="form_emp_profile">{{ $emp[0]->Res_Accomp_Answer }}</textarea>
+                            <label class="invalid-feedback" id="PRA_error">Please fill up the field</label>
                         </div>
                         <div class="row pt-2">
                             <label for="SnE">
                                 Strengths and Expertise
                             </label>
-                            <textarea name="SnE" id="SnE" cols="30" rows="6" class="form-control"></textarea>
+                            <textarea name="SnE" id="SnE" cols="30" rows="6" class="form-control" form="form_emp_profile">{{ $emp[0]->Str_Exp_Answer }}</textarea>
+                            <label class="invalid-feedback" id="SnE_error">Please fill up the field</label>
                         </div>
                         <div class="row pt-2">
                             <label for="SAR">
                                 Scope of Assignment and Responsibility (Branch/Clusters/Region/Function)
                             </label>
-                            <textarea name="SAR" id="SAR" cols="30" rows="6" class="form-control"></textarea>
+                            <textarea name="SAR" id="SAR" cols="30" rows="6" class="form-control" form="form_emp_profile">{{ $emp[0]->Scope_Answer }}</textarea>
+                            <label class="invalid-feedback" id="SAR_error">Please fill up the field</label>
                         </div>
-                        <div class="row pt-2">
-                            <button type="button" class="btn btn-success" name="btnSaveEval" id="btnSaveEval">SAVE</button>
+                        <div class="row pt-2 d-flex">
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-success" name="btnSaveEval" id="btnSaveEval">SAVE</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" name="btnApprove" id="btnApprove">Approve</button>
+                                <button type="button" class="btn btn-danger" name="btnDisapprove" id="btnDisapprove">Disapprove</button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -12,6 +12,11 @@ class PEA extends Model
         return DB::select('sp_PEA_Filed_Get ?,?,?,?,?,?' , $data);
     }
 
+    public static function getPEAFiled2($data)
+    {
+        return DB::select('sp_PEA_Filed_Get ?' , $data);
+    }
+
     public static function getEmp($data)
     {
         return DB::select('sp_Emp_get ?,?,?,?,?,?' , $data);
@@ -60,5 +65,20 @@ class PEA extends Model
     public static function updateMonthlyComment($data)
     {
         return DB::select('sp_PEA_MonthlyApproved_Update ?,?,?,?,?,?,?' , $data);
+    }
+
+    public static function updateRecomLetter($data)
+    {
+        return DB::select('sp_PEA_RecomLetter_Update ?,?,?,?,?' , $data);
+    }
+
+    public static function getRecomLetter($data)
+    {
+        return DB::select('sp_PEA_RecomLetter_Get ?' , $data);
+    }
+
+    public static function getPEAApproval($data)
+    {
+        return DB::select('sp_PEA_FiledApproved_Get ?,?,?,?,?,?,?,?,?,?,?' , $data);
     }
 }

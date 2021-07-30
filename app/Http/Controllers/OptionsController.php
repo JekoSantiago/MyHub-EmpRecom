@@ -40,6 +40,19 @@ class OptionsController extends Controller
         echo $output;
     }
 
+    public function getLocation()
+    {
+        $data = Common::getLocation();
+
+        $output = '<option></option>';
+
+        foreach($data as $loc) :
+            $output .= '<option value="'. $loc->Location_ID .'">'. $loc->Location .'</option>';
+        endforeach;
+
+        echo $output;
+    }
+
 
 
 }
