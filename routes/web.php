@@ -24,6 +24,7 @@ use Illuminate\Mail\Mailable;
 //Index
 Route::any('/','AuthController@index');
 Route::get('/logout','AuthController@logout')->name('logout');
+Route::post('/pin-check','AuthController@getUserPIN');
 
 
 // Pages
@@ -42,7 +43,7 @@ Route::get('/get-loc','OptionsController@getLocation');
 Route::post('/PEA-get','PEAController@getPEAFiled');
 Route::post('/PEA-insert','PEAController@insertPEA');
 Route::post('/PEA-update','PEAController@updatePEA');
-Route::get('/PEA-Filed/PEA-rating/{id}','PEAController@ratePEA');
+Route::get('/PEA-rating/{id}','PEAController@ratePEA');
 Route::post('/PEA-Rate-insert','PEAController@insertRatings');
 Route::post('/PEA-Rate-update','PEAController@updateRatings');
 Route::post('/PEA-comment-get/{id}','PEAController@monthlyComments');
@@ -50,6 +51,8 @@ Route::post('/PEA-comment-insert','PEAController@insertMonthlyComments');
 Route::post('/PEA-comment-update','PEAController@updateMonthlyComments');
 Route::post('/PEA-recom-update','PEAController@updateRecomLetter');
 Route::post('/PEA-Approval-get','PEAController@getPEAApproved');
+Route::post('/PEA-Approval-insert','PEAController@insertApprovedFile');
+Route::post('/PEA-batch-approval','PEAController@batchApprovedFile');
 
 
 

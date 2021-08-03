@@ -1,5 +1,10 @@
 @extends('layouts.main')
 @section('content')
+@php
+use App\Helper\MyHelper;
+$checkAccessParams['userAccess'] = Session::get('UserAccess');
+$checkAccessParams['moduleID'] = env('MODULE_PEA');
+@endphp
 
 
 <div class="container-fluid">
@@ -21,8 +26,13 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header" style="background-color:rgb(77,97,112)">
-                    <h4 class="text-white">In-Process</h4>
+                <div class="card-header d-flex flex-wrap" style="background-color:rgb(77,97,112)">
+                    <div class="col-md-11">
+                        <h4 class="text-white">Approval</h4>
+                    </div>
+                    <div class="col">
+                       @if (MyHelper::decrypt(Session::get('PositionLevel_ID'))==2) <button type="button" class="btn btn-success" name="btnApprove" id="btnApprove">Approve</button> @endif
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="d-flex flex-wrap">
@@ -66,13 +76,13 @@
                             </div>
                             <div class="row pl-5">
                                 <div class="col-md-12 pt-3">
-                                    <button type="button" id="BtnFilterSubmit" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-magnify mr-1"></i>Search</button>
+                                    <button type="button" id="BtnFilterSubmitA" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-magnify mr-1"></i>Search</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex flex-wrap">
-                            <div class="row pl-3">
+                            <div class="row pl-3 pb-2">
                                 <div class="col-md-12">
                                     <label for="fdatestart"> Filed Date Start: </label> <br>
                                     <input type="date" name="fdatestart" id="fdatestart" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
@@ -118,19 +128,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-2">
-                        <div class="col-md-12">
-                            <div class="d-flex flex-wrap justify-content-between">
-                                <div class="text-sm-left">
-                                    <button type="button" data-toggle="modal" data-target="#modal_new_pea" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-plus-circle mr-1"></i>Create New</button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
                     <table id="tbl_pea_approval" class="table table-centered w-100 nowrap">
                         <thead>
                             <tr>
+                                <th><input type="checkbox" id="checkAll"></th>
+                                <th>Ratings</th>
                                 <th>Control #</th>
                                 <th>Employee No.</th>
                                 <th>Full Name</th>

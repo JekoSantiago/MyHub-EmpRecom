@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+@php use App\Helper\MyHelper; @endphp
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -22,7 +23,7 @@
         <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #A9772B;">RL</button> &nbsp;
     </div>
     <div class="col-lg-1 pt-1">
-        <a href="#"><button type="button" class="btn btn-outline-secondary">Back</button></a>
+        <a href="{{ url()->previous() }}"><button type="button" class="btn btn-outline-secondary">Back</button></a>
     </div>
 </div>
 
@@ -74,7 +75,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form id="form_ratings"> <input type="hidden" name="FiledID" id="FiledID" value="{{ $emp[0]->Filed_ID }}"></form>
+                    <form id="form_ratings">
+                        <input type="hidden" name="FiledID" id="FiledID" value="{{ $emp[0]->Filed_ID }}">
+                        <input type="hidden" name="_token" id="globalToken" value="{{csrf_token()}}" />
+                    </form>
                     <table id="tbl_emp_ratings" class="table table-bordered w-100 nowrap">
                         <tbody>
                             <tr>
@@ -254,20 +258,22 @@
         </div>
     </div>
 </div>
+<form id="form_emp_profile">
+    <input type="hidden" name="FiledIDRec" id="FiledIDRec" value="{{ $emp[0]->Filed_ID }}">\
+    <input type="hidden" name="_token" id="globalToken" value="{{csrf_token()}}" />
 
-<div class="container-fluid pt-3">
+</form>
+
+<div class="container-fluid pt-3" id="recomForm" @if($emp[0]->TotalPoint <= 79) style="display: none" @endif>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title text-center">Recommendation Letter Comment (must be filled up by Evaluator)</h4>
-                    <form id="form_emp_profile">
-                        <div class="form-group">
-                            <textarea name="recom_letter" id="recom_letter" cols="30" rows="10" class="form-control" placeholder="Recomendation letter...">{{ $emp[0]->RecomComment }}</textarea>
-                            <label class="invalid-feedback" id="recom_letter_error">Please fill up the field</label>
-                            <input type="hidden" name="FiledIDRec" id="FiledIDRec" value="{{ $emp[0]->Filed_ID }}">
-                        </div>
-                    </form>
+                    <div class="form-group">
+                        <textarea name="recom_letter" form="form_emp_profile" id="recom_letter" cols="30" rows="10" class="form-control" placeholder="Recomendation letter...">{{ $emp[0]->RecomComment }}</textarea>
+                        <label class="invalid-feedback" id="recom_letter_error">Please fill up the field</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -306,9 +312,16 @@
                             <div class="col-md-5">
                                 <button type="button" class="btn btn-success" name="btnSaveEval" id="btnSaveEval">SAVE</button>
                             </div>
+                            @php $checkAccessParams['userAccess'] = Session::get('UserAccess');
+                            $checkAccessParams['moduleID'] = env('MODULE_PEA');
+                            @endphp
                             <div class="col">
-                                <button type="button" class="btn btn-primary" name="btnApprove" id="btnApprove">Approve</button>
-                                <button type="button" class="btn btn-danger" name="btnDisapprove" id="btnDisapprove">Disapprove</button>
+                                @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_APPROVE')]))
+                                    @if((Myhelper::decrypt(Session::get('Department_ID')) == env('OPS_DEPT_ID') && $emp[0]->AMAppDate == null) || (Myhelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID') && $emp[0]->HRAppDate == null) )
+                                        <button type="button" class="btn btn-primary" name="btnApprove" id="btnApprove">Approve</button>
+                                        <button type="button" class="btn btn-danger" name="btnDisapprove" id="btnDisapprove">Disapprove</button>
+                                    @endif
+                                @endif
                             </div>
                         </div>
 
@@ -328,15 +341,15 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <h5><b>Recommended By:<br><br>Approved Date:</b></h5>
+                                    <h5><b>Recommended By: {{ $emp[0]->AMName }}<br><br>Approved Date: {{ $emp[0]->AMAppDate }}</b></h5>
                                 </td>
                                 <td>
-                                    <h5><b>Approved By:<br><br>Approved Date:</b></h5>
+                                    <h5><b>Approved By: {{ $emp[0]->HRName }}<br><br>Approved Date: {{ $emp[0]->HRAppDate }}</b></h5>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <h5><b>Checked and Reviewed By:<br><br>Approved Date:</b></h5>
+                                    <h5><b>Checked and Reviewed By: {{ $emp[0]->ExecName }}<br><br>Approved Date: {{ $emp[0]->ExecAppDate }}</b></h5>
                                 </td>
                             </tr>
                         </tbody>
@@ -346,8 +359,9 @@
         </div>
     </div>
 </div>
-@include('pages.PEA.in-process.modal.comment')
+@include('pages.PEA.ratings.modal.comment')
 @endsection
 @section('js')
 <script src="{{ URL::asset('assets/js/custom/ratings.js')}}"></script>
+<script src="{{ URL::asset('assets/js/custom/approval.js')}}"></script>
 @endsection

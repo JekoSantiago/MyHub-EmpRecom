@@ -29,6 +29,7 @@ class OptionsController extends Controller
     {
         $param = [0,0,MyHelper::decrypt(Session::get('Employee_ID')),0,5,''];
 
+        // dd($param);
         $data =  PEA::getEmp($param);
 
         $output = '<option></option>';

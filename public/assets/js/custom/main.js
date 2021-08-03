@@ -25,10 +25,9 @@ $(document).ready(function() {
 
 
 
-    // $.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) {
-    //     console.log(message);
-    //     datatable.ajax.reload();
-    // };
+    $.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) {
+        console.log(message);
+    };
 
 //     var $sidebar   = $("#sidebar-menu"),
 //     $window    = $(window),

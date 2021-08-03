@@ -1,20 +1,46 @@
 $(document).ready(function() {
 
-
+    var disableComm;
     var FiledID = $('#FiledID').val();
 
-    console.log(isCommented);
-    if(isCommented > 0)
+    console.log(isCommented,ApproveType);
+    if(isCommented == 3 && Qremain == 0)
     {
         $(".rad_1").attr('disabled',true);
         $(".rad_2").attr('disabled',true);
         $(".rad_3").attr('disabled',true);
         $(".rad_4").attr('disabled',true);
         $(".rad_5").attr('disabled',true);
+        if(ApproveType == 1)
+        {
+            disableComm == 1
+            $("#PRA").attr('disabled',true);
+            $("#SnE").attr('disabled',true);
+            $("#SAR").attr('disabled',true);
+            $("#recom_letter").attr('disabled',true);
+            $("#btnSaveEval").hide();
+        }
+        else if(ApproveType == 2)
+        {
+            disableComm == 0
+            $("#PRA").attr('disabled',false);
+            $("#SnE").attr('disabled',false);
+            $("#SAR").attr('disabled',false);
+            $("#recom_letter").attr('disabled',false);
+            $("#btnSaveEval").show();
+        }
+        else if(ApproveType == 3)
+        {
+            disableComm == 1
+            $("#PRA").attr('disabled',true);
+            $("#SnE").attr('disabled',true);
+            $("#SAR").attr('disabled',true);
+            $("#recom_letter").attr('disabled',true);
+            $("#btnSaveEval").hide();
+        }
     }
     else
     {
-        console.log(isHR,isHRRated);
         if (isHR==1)
         {
             $(".rad_1").attr('disabled',true);
@@ -29,6 +55,7 @@ $(document).ready(function() {
             $("#SAR").attr('disabled',true);
             $("#recom_letter").attr('disabled',true);
             $("#btnSaveEval").hide();
+
         }
         else
         {
@@ -39,6 +66,7 @@ $(document).ready(function() {
                 $(".rad_3").attr('disabled',false);
                 $(".rad_4").attr('disabled',true);
                 $(".rad_5").attr('disabled',false);
+                disableComm = 0;
             }
             else
             {
@@ -47,6 +75,8 @@ $(document).ready(function() {
                 $(".rad_3").attr('disabled',true);
                 $(".rad_4").attr('disabled',true);
                 $(".rad_5").attr('disabled',true);
+                 disableComm = 1;
+
             }
 
         }
@@ -113,6 +143,15 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
                     }
                     else
                     {
@@ -134,6 +173,15 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
+
                     }
                     else if(data.num==-1)
                     {
@@ -142,6 +190,14 @@ $(document).ready(function() {
                             {
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
+                                if(data.ave > 79)
+                                {
+                                    $('#recomForm').show();
+                                }
+                                else
+                                {
+                                    $('#recomForm').hide();
+                                }
                             }
                             else
                             {
@@ -186,6 +242,14 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
                     }
                     else
                     {
@@ -207,6 +271,14 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
                     }
                     else if(data.num==-1)
                     {
@@ -215,6 +287,14 @@ $(document).ready(function() {
                             {
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
+                                if(data.ave > 79)
+                                {
+                                    $('#recomForm').show();
+                                }
+                                else
+                                {
+                                    $('#recomForm').hide();
+                                }
                             }
                             else
                             {
@@ -259,6 +339,14 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
                     }
                     else
                     {
@@ -280,6 +368,14 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
                     }
                     else if(data.num==-1)
                     {
@@ -288,6 +384,14 @@ $(document).ready(function() {
                             {
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
+                                if(data.ave > 79)
+                                {
+                                    $('#recomForm').show();
+                                }
+                                else
+                                {
+                                    $('#recomForm').hide();
+                                }
                             }
                             else
                             {
@@ -332,6 +436,14 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
                     }
                     else if(data.num==-1)
                     {
@@ -340,6 +452,14 @@ $(document).ready(function() {
                             {
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
+                                if(data.ave > 79)
+                                {
+                                    $('#recomForm').show();
+                                }
+                                else
+                                {
+                                    $('#recomForm').hide();
+                                }
                             }
                             else
                             {
@@ -374,6 +494,14 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
                     }
                     else if(data.num==-1)
                     {
@@ -382,6 +510,14 @@ $(document).ready(function() {
                             {
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
+                                if(data.ave > 79)
+                                {
+                                    $('#recomForm').show();
+                                }
+                                else
+                                {
+                                    $('#recomForm').hide();
+                                }
                             }
                             else
                             {
@@ -426,6 +562,14 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
                     }
                     else
                     {
@@ -447,6 +591,14 @@ $(document).ready(function() {
                     {
                         $('#AvePoint').text(data.ave);
                         rateScale();
+                        if(data.ave > 79)
+                        {
+                            $('#recomForm').show();
+                        }
+                        else
+                        {
+                            $('#recomForm').hide();
+                        }
                     }
                     else if(data.num==-1)
                     {
@@ -455,6 +607,14 @@ $(document).ready(function() {
                             {
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
+                                if(data.ave > 79)
+                                {
+                                    $('#recomForm').show();
+                                }
+                                else
+                                {
+                                    $('#recomForm').hide();
+                                }
                             }
                             else
                             {
@@ -503,7 +663,8 @@ $(document).ready(function() {
                 {render:function(data,type,row)
                 {
                     var icon = (row.EvalComment == null) ? '<a href="javascript:void(0)" class="text-info m_comment"> <i class="mdi mdi-24px mdi-comment-outline"></i> <a>' : '<a href="javascript:void(0)" class="text-info m_update"> <i class="mdi mdi-24px mdi-comment-processing-outline"></i> <a>'
-                    if(isHR == 0)
+                    console.log(disableComm);
+                    if(isHR == 0 && disableComm == 0)
                     {
                         return  icon ;
                     }
@@ -707,21 +868,24 @@ $(document).ready(function() {
 
     $('#btnSaveEval').on('click',function(){
         var error = false;
-        var recom = $('#recom_letter').val();
         var pra = $('#PRA').val();
         var sne = $('#SnE').val();
         var sar = $('#SAR').val();
 
-        if (recom.length <= 0)
+        if($('#recomForm').is(":visible"))
         {
-            error = true;
-            $('#recom_letter').addClass('error-input');
-            $('#recom_letter_error').show();
-        }
-        else
-        {
-            $('#recom_letter').removeClass('error-input');
-            $('#recom_letter_error').hide();
+            var recom = $('#recom_letter').val();
+            if (recom.length <= 0)
+            {
+                error = true;
+                $('#recom_letter').addClass('error-input');
+                $('#recom_letter_error').show();
+            }
+            else
+            {
+                $('#recom_letter').removeClass('error-input');
+                $('#recom_letter_error').hide();
+            }
         }
 
         if (pra.length <= 0)

@@ -23,7 +23,7 @@
                     </a>
                     <div class="collapse sidebar-submenu" id="sidebarPEA" style="">
                         <ul class="nav-second-level">
-                            @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ALL')]) || MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ADD')]) )
+                            @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ALL')]) || MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ADD')]) || MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_EDIT')]))
                             <li>
                                 <a href="{{route('PEA_Filed')}}" class="menu-collapsed">In-process</a>
                             </li>

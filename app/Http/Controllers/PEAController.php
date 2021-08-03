@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Common;
 use App\Helper\MyHelper;
 use App\PEA;
 use Illuminate\Http\Request;
@@ -43,10 +44,8 @@ class PEAController extends Controller
             $request->hdateend ? : '1900-01-01'
 
         ];
-        // dd($param);
-        $data = PEA::getPEAApproval($param);
-        // dd($data);
 
+        $data = PEA::getPEAApproval($param);
         return datatables($data)->toJson();
     }
 
@@ -121,13 +120,32 @@ class PEAController extends Controller
             }
         }
 
+        $Qremain = $emp[0]->NumOfQuestRemain;
+
+        $ApproveType =0;
+        if (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
+        {
+            $ApproveType = 2;
+        }
+        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 3)
+        {
+            $ApproveType = 1;
+        }
+        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 1)
+        {
+            $ApproveType = 3;
+        }
+
+
         JavaScriptFacade::put([
             'isHR' =>  $isHR,
             'isHRRated' => $isHRRated,
-            'isCommented' => $countCom
+            'isCommented' => $countCom,
+            'ApproveType' => $ApproveType,
+            'Qremain' => $Qremain
         ]);
 
-        return view ('pages.PEA.in-process.ratings.index', $data);
+        return view ('pages.PEA.ratings.index', $data);
     }
 
     public function insertRatings(Request $request)
@@ -201,15 +219,6 @@ class PEAController extends Controller
     {
         $ApproveType = 1;
 
-        if (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
-        {
-            $ApproveType = 2;
-        }
-        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == env('1'))
-        {
-            $ApproveType = 3;
-        }
-
         $param = [
             $request->FiledID,
             $request->MonthID,
@@ -231,11 +240,13 @@ class PEAController extends Controller
 
     public function updateMonthlyComments(Request $request)
     {
-        $ApproveType = 1;
-
         if (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
         {
             $ApproveType = 2;
+        }
+        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 3)
+        {
+            $ApproveType = 1;
         }
         else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 1)
         {
@@ -275,6 +286,84 @@ class PEAController extends Controller
 
         $num = $update[0]->Q_RETURN;
         $msg = $update[0]->Q_MSG;
+
+        $result = array('num' => $num, 'msg' => $msg);
+        return $result;
+
+    }
+
+    public function insertApprovedFile(Request $request)
+    {
+        if (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
+        {
+            $ApproveType = 2;
+        }
+        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 3)
+        {
+            $ApproveType = 1;
+        }
+        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 1)
+        {
+            $ApproveType = 3;
+        }
+
+        $param = [
+            $request -> FiledID,
+            MyHelper::decrypt(Session::get('Employee_ID')),
+            $ApproveType,
+            $request -> Remarks ? : '',
+            MyHelper::decrypt(Session::get('Employee_ID')),
+        ];
+
+        $insert = PEA::insertApprovedFile($param);
+
+        $num = $insert[0]->Q_RETURN;
+        $msg = $insert[0]->Q_MSG;
+
+        $result = array('num' => $num, 'msg' => $msg);
+        return $result;
+
+    }
+
+    public function batchApprovedFile(Request $request)
+    {
+        if (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
+        {
+            $ApproveType = 2;
+        }
+        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 3)
+        {
+            $ApproveType = 1;
+        }
+        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 1 || MyHelper::decrypt(Session::get('PositionLevel_ID')) == 2)
+        {
+            $ApproveType = 3;
+        }
+
+        $FiledIDs = $request->FiledID;
+        $count = 0;
+        foreach($FiledIDs as $FiledID)
+        {
+
+            $param = [
+                $FiledID,
+                MyHelper::decrypt(Session::get('Employee_ID')),
+                $ApproveType,
+                $request -> Remarks ? : '',
+                MyHelper::decrypt(Session::get('Employee_ID')),
+            ];
+
+            $insert = PEA::insertApprovedFile($param);
+
+            if($insert[0]->Q_RETURN > 0)
+            {
+                $count++;
+            }
+
+        }
+
+        $num = $count;
+        $msg = "Successfully approved " . $count . " employees.";
 
         $result = array('num' => $num, 'msg' => $msg);
         return $result;

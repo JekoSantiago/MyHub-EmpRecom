@@ -81,4 +81,9 @@ class PEA extends Model
     {
         return DB::select('sp_PEA_FiledApproved_Get ?,?,?,?,?,?,?,?,?,?,?' , $data);
     }
+
+    public static function insertApprovedFile($data)
+    {
+        return DB::select('sp_PEA_Approved_Insert ?,?,?,?,?', $data);
+    }
 }

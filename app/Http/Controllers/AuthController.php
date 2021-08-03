@@ -71,9 +71,33 @@ class AuthController extends Controller
 
 
     }
+
     public function logout()
     {
         Artisan::call('cache:clear');
         return  Redirect::to(env('MYHUB_LOGOUT_URL'));
     }
+
+    public function getUserPIN(Request $request)
+    {
+        $userID =  MyHelper::decrypt(Session::get('Employee_ID'));
+        $empNo = MyHelper::decrypt(Session::get('EmployeeNo'));
+        $res = Common::getUserPIN([$userID]);
+        $pin = $res[0]->PIN;
+
+        $rqPIN = $request -> PIN;
+
+        $vPIN = MyHelper::passwordEncrypt($empNo,$rqPIN);
+
+        if($vPIN == $pin)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+
+    }
+
 }

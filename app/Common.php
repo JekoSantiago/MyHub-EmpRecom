@@ -30,5 +30,9 @@ class Common extends Model
         return DB::select('sp_Location_get');
    }
 
+   public static function getUserPIN($data)
+   {
+       return DB::select('sp_EmpPIN_GET ?' , $data);
+   }
 
 }

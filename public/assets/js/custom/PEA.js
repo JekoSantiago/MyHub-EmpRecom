@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    console.log(ApproveType);
+
     $('#position').select2({
         placeholder: "Select Position"
     });
@@ -21,20 +23,21 @@ $(document).ready(function() {
         placeholder: "Select Location"
     });
 
-
-    $.ajax({
-        url:WebURL+'/get-loc',
-        type:'GET',
-        dataType: 'text',
-        cache: false,
-        success: function (data) {
-            $('#location').html(data);
-        },
-        error: function () {
-            console.log('error');
-        }
-    })
-
+    if($('#location').is(':visible'))
+    {
+        $.ajax({
+            url:WebURL+'/get-loc',
+            type:'GET',
+            dataType: 'text',
+            cache: false,
+            success: function (data) {
+                $('#location').html(data);
+            },
+            error: function () {
+                console.log('error');
+            }
+        })
+    }
 
 
 
@@ -133,6 +136,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         scrollX: true,
+        ordering: false,
         ajax      : {
             url: WebURL + '/PEA-get',
             method: 'POST',
@@ -155,8 +159,8 @@ $(document).ready(function() {
         },
         columns   :[
             {data:"ControlNum",render:function(data, type, row){
-                return '<a href="'+WebURL+'/PEA-Filed/PEA-rating/'+row.Filed_ID+'"class="text-info">'+row.ControlNum+'</a>'}},
-            {data:"Employee_ID"},
+                return '<a href="'+WebURL+'/PEA-rating/'+row.Filed_ID+'"class="text-info" id="rateemp">'+row.ControlNum+'</a>'}},
+            {data:"EmployeeNo"},
             {data:"FullName"},
             {data:"Position"},
             {data:"DateHired"},
@@ -164,7 +168,12 @@ $(document).ready(function() {
                 return row.LocationCode + " - " + row.Location
             }},
             {render:function(data, type, row){
-                return '<a href="javascript:void(0)" class="text-info updatePEA"> <i class="mdi mdi-24px mdi-account-edit"></i></a>' ;
+                var update = '';
+                if(row.HRRateStatus == 0 && isHR==0)
+                {
+                    update = '<a href="javascript:void(0)" class="text-info updatePEA"> <i class="mdi mdi-24px mdi-account-edit"></i></a>' ;
+                }
+                return update;
             }}
         ],
         language: {
@@ -176,32 +185,50 @@ $(document).ready(function() {
             processing:'<div class="text-center"><div class="spinner spinner-border"></div></div>'
         },
         createdRow: function (row, data, index){
-            if(data.NumOfQuestRemain == 0) {
-                $(row).css("background-color", "#5CB1FC");
-            }
-
-            if(data.HRRateStatus == 1) {
-                $(row).css("background-color", "#E4A0AE");
-            }
-
-            if(data.AMAppDate != null && data.HRAppDate == null && data.ExecAppDate == null) {
-                $(row).css("background-color", "#FCF17F");
-            }
-
-            if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate == null) {
-                $(row).css("background-color", "#C6A0C6");
-            }
 
             if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate != null) {
                 $(row).css("background-color", "#BAE654");
             }
 
+            else if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate == null) {
+                $(row).css("background-color", "#C6A0C6");
+            }
+
+            else if(data.AMAppDate != null && data.HRAppDate == null && data.ExecAppDate == null) {
+                $(row).css("background-color", "#FCF17F");
+            }
+
+            else if(data.NumOfQuestRemain == 0 && data.MonthEvalCommentCount == 3 && data.RecomComment.length>0 && data.Res_Accomp_Answer.length>0 && data.Scope_Answer.length>0 && data.Str_Exp_Answer.length>0) {
+                $(row).css("background-color", "#5CB1FC");
+            }
+
+            else if(data.HRRateStatus == 1 && data.NumOfQuestRemain > 0) {
+                $(row).css("background-color", "#E4A0AE");
+            }
 
         },
+        initComplete:function()
+        {
+            if(isHR==1)
+            {
+                tbl_pea_inprocess.column(6).visible(false);
+            }
+        }
     });
 
     $('#BtnFilterSubmit').on('click', function(){
         tbl_pea_inprocess.ajax.reload()
+    })
+    $('#BtnFilterSubmitA').on('click', function(){
+        tbl_pea_approval.ajax.reload()
+        if($('#forApproval').val()==1)
+        {
+            tbl_pea_approval.column(0).visible(false);
+        }
+        else
+        {
+            tbl_pea_approval.column(0).visible(true);
+        }
     })
 
     $('body').on('click','.updatePEA',function(e){
@@ -293,7 +320,6 @@ $(document).ready(function() {
 
     })
 
-
     /**
      *  Approval PEA
      */
@@ -302,11 +328,12 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         scrollX: true,
+        ordering: false,
         ajax      : {
             url: WebURL + '/PEA-Approval-get',
             method: 'POST',
             data: function (data) {
-                var forRating = $('#forRating').val();
+                var forApproval = $('#forApproval').val();
                 var controlNo = $('#controlNo').val();
                 var employeeName = $('#employeeName').val();
                 var position = $('#position').val();
@@ -317,8 +344,7 @@ $(document).ready(function() {
                 var hdateend = $('#hdateend').val();
                 var token = $('#globalToken').val()
 
-
-                data.forRating = forRating;
+                data.forApproval = forApproval;
                 data.controlNo = controlNo;
                 data.employeeName = employeeName;
                 data.position = position;
@@ -333,9 +359,13 @@ $(document).ready(function() {
             dataType: 'json',
         },
         columns   :[
+            {render:function(data,type,row){
+                return '<input type="checkbox" name="batchAppr" value="'+ row.Filed_ID +'">'
+            }},
+            {data:"TotalPoint"},
             {data:"ControlNum",render:function(data, type, row){
-                return '<a href="'+WebURL+'/PEA-Filed/PEA-rating/'+row.Filed_ID+'"class="text-info">'+row.ControlNum+'</a>'}},
-            {data:"Employee_ID"},
+                return '<a href="'+WebURL+'/PEA-rating/'+row.Filed_ID+'"class="text-info">'+row.ControlNum+'</a>'}},
+            {data:"EmployeeNo"},
             {data:"FullName"},
             {data:"Position"},
             {data:"DateHired"},
@@ -354,29 +384,113 @@ $(document).ready(function() {
             processing:'<div class="text-center"><div class="spinner spinner-border"></div></div>'
         },
         createdRow: function (row, data, index){
-            if(data.NumOfQuestRemain == 0) {
-                $(row).css("background-color", "#5CB1FC");
-            }
-
-            if(data.HRRateStatus == 1) {
-                $(row).css("background-color", "#E4A0AE");
-            }
-
-            if(data.AMAppDate != null && data.HRAppDate == null && data.ExecAppDate == null) {
-                $(row).css("background-color", "#FCF17F");
-            }
-
-            if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate == null) {
-                $(row).css("background-color", "#C6A0C6");
-            }
-
             if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate != null) {
                 $(row).css("background-color", "#BAE654");
             }
 
+            else if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate == null) {
+                $(row).css("background-color", "#C6A0C6");
+            }
 
+            else if(data.AMAppDate != null && data.HRAppDate == null && data.ExecAppDate == null) {
+                $(row).css("background-color", "#FCF17F");
+            }
+
+            else if(data.HRRateStatus == 1 && data.NumOfQuestRemain == 0) {
+                $(row).css("background-color", "#5CB1FC");
+            }
+
+            else if(data.HRRateStatus == 1 && data.NumOfQuestRemain > 0) {
+                $(row).css("background-color", "#E4A0AE");
+            }
         },
+        initComplete: function(row) {
+            console.log($('#forApproval').val());
+            if (ApproveType != 3)
+            {
+                tbl_pea_approval.column(0).visible(false);
+                tbl_pea_approval.column(1).visible(false);
+            }
+
+          }
+
     });
+
+    $('#checkAll').click(function () {
+        $('input:checkbox').prop('checked', this.checked);
+    });
+
+    var batchApp=[];
+    $('#btnApprove').on('click',function(){
+        batchApp=[];
+        $("input:checkbox[name=batchAppr]:checked").each(function(){
+            batchApp.push($(this).val());
+        });
+
+        $('#btnApprove').on('click' ,function(){
+            swal.fire({
+                title: 'Enter PIN',
+                showCancelButton: true,
+                html: '<input type="password" id="pin" class="swal2-input" placeholder="Password"  maxlength="4">',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                showLoaderOnConfirm: true,
+                allowOutsideClick: false,
+                preConfirm:(done) =>
+                {
+                    return new Promise(function(resolve, reject) {
+                    Swal.getCancelButton().setAttribute('disabled', '')
+                    var PIN = Swal.getPopup().querySelector('#pin').value
+                        $.post(WebURL + '/pin-check',{PIN:PIN},function(data){
+                            if(data == 1)
+                            {
+                                $.post(WebURL + '/PEA-batch-approval',{FiledID:batchApp},function(data){
+                                    if(data.num>=0)
+                                    {
+                                        swal.fire({
+                                            title: "Success!",
+                                            text: data.msg,
+                                            icon: "success",
+                                            confirmButtonText: "Ok",
+                                            confirmButtonColor: '#6658dd',
+                                            allowOutsideClick: false,
+                                        });
+                                        tbl_pea_approval.ajax.reload();
+                                    }
+                                    else
+                                    {
+                                        swal.fire({
+                                            title: "Warning!",
+                                            text: data.msg,
+                                            icon: "warning",
+                                            confirmButtonText: "Ok",
+                                            confirmButtonColor: '#6658dd',
+                                            allowOutsideClick: false,
+                                        });
+                                    }
+                                })
+                            }
+                            else
+                            {
+                                swal.fire({
+                                    title: "Warning!",
+                                    text: "Wrong PIN",
+                                    icon: "warning",
+                                    confirmButtonText: "Ok",
+                                    confirmButtonColor: '#6658dd',
+                                    allowOutsideClick: false,
+                                });
+                            }
+
+                        })
+                    });
+                }
+            })
+        })
+
+    })
+
 
 
 
