@@ -85,25 +85,25 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
                             <div class="row pl-3 pb-2">
                                 <div class="col-md-12">
                                     <label for="fdatestart"> Filed Date Start: </label> <br>
-                                    <input type="date" name="fdatestart" id="fdatestart" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
+                                    <input type="date" name="fdatestart" id="fdatestart" value="{{$paramPEAApproval['fdatestart']}}" placeholder="Control #" class="form-control">
                                 </div>
                             </div>
                             <div class="row pl-3">
                                 <div class="col-md-12">
                                     <label for="fdateend"> Filed Date End: </label> <br>
-                                    <input type="date" name="fdateend" id="fdateend" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
+                                    <input type="date" name="fdateend" id="fdateend" value="{{$paramPEAApproval['fdateend']}}" placeholder="Control #" class="form-control">
                                 </div>
                             </div>
                             <div class="row pl-3">
                                 <div class="col-md-12">
                                     <label for="hdatestart"> Hired Date Start: </label> <br>
-                                    <input type="date" name="hdatestart" id="hdatestart" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
+                                    <input type="date" name="hdatestart" id="hdatestart" value="{{$paramPEAApproval['hdatestart']}}" placeholder="Control #" class="form-control">
                                 </div>
                             </div>
                             <div class="row pl-3">
                                 <div class="col-md-12">
                                     <label for="fdateend"> Hired Date End: </label> <br>
-                                    <input type="date" name="hdateend" id="hdateend" value="{{$paramPEAApproval['controlNo']}}" placeholder="Control #" class="form-control">
+                                    <input type="date" name="hdateend" id="hdateend" value="{{$paramPEAApproval['hdateend']}}" placeholder="Control #" class="form-control">
                                 </div>
                             </div>
                         </div>

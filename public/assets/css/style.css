@@ -82,7 +82,7 @@ File: Main custom CSS file
 }
 
 .app-logo span {
-    color: rgb(253, 6, 6);
+    color: rgb(77,97,112);
     font-size: 18px;
     font-weight: 800;
 }
@@ -93,14 +93,14 @@ File: Main custom CSS file
     }
   }
 
-  .pagination .page-item.active .page-link { background-color: rgb(177, 31, 31); }
+  .pagination .page-item.active .page-link { background-color: rgb(77,97,112); }
 
 div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus {
-background-color: rgb(177, 31, 31);
+background-color: rgb(77,97,112);
 }
 
 .pagination .page-item.active .page-link:hover {
-background-color: rgb(177, 31, 31);
+background-color: rgb(77,97,112);
 }
 
 .time-frame {

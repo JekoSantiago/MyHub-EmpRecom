@@ -107,15 +107,16 @@
                     </a>
                     <div class="collapse sidebar-submenu" id="sidebarBI" style="">
                         <ul class="nav-second-level">
+                            @if(Myhelper::decrypt(Session::get('PositionLevel_ID')) > 3)
                             <li>
-                                <a href="#" class="menu-collapsed">In-process</a>
+                                <a href="{{route('BI_Filed')}}" class="menu-collapsed">In-process</a>
                             </li>
+                            @endif
+                            @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_APPROVE')]) )
                             <li>
-                                <a href="#" class="menu-collapsed">Approval</a>
+                                <a href="{{route('BI_Approval')}}" class="menu-collapsed">Approval</a>
                             </li>
-                            <li>
-                                <a href="#" class="menu-collapsed">Reports</a>
-                            </li>
+                            @endif
                         </ul>
                     </div>
                 </li>
@@ -130,7 +131,7 @@
 
 
                 <li>
-                    <a href="#">
+                    <a href="{{ route('NonReg') }}">
                         <i data-feather="user-x"></i>
                         <span> Non Reg Approval </span>
                     </a>

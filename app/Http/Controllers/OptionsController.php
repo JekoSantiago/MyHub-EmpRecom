@@ -54,6 +54,18 @@ class OptionsController extends Controller
         echo $output;
     }
 
+    public function getDepartment()
+    {
+        $data = Common::getDepartment();
+
+        $output = '<option></option>';
+
+        foreach($data as $dept) :
+            $output .= '<option value="'. $dept->Department_ID .'">'. $dept->Department .'</option>';
+        endforeach;
+
+        echo $output;
+    }
 
 
 }

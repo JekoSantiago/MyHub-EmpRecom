@@ -120,7 +120,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -184,6 +184,10 @@ $(document).ready(function() {
             },
             processing:'<div class="text-center"><div class="spinner spinner-border"></div></div>'
         },
+        error: function (xhr, error, code)
+        {
+            tbl_pea_inprocess.ajax.reload();
+        },
         createdRow: function (row, data, index){
 
             if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate != null) {
@@ -219,15 +223,22 @@ $(document).ready(function() {
     $('#BtnFilterSubmit').on('click', function(){
         tbl_pea_inprocess.ajax.reload()
     })
+
     $('#BtnFilterSubmitA').on('click', function(){
         tbl_pea_approval.ajax.reload()
         if($('#forApproval').val()==1)
         {
-            tbl_pea_approval.column(0).visible(false);
+            if(ApproveType == 3)
+            {
+                tbl_pea_approval.column(0).visible(false);
+            }
         }
         else
         {
-            tbl_pea_approval.column(0).visible(true);
+            if(ApproveType == 3)
+            {
+                tbl_pea_approval.column(0).visible(true);
+            }
         }
     })
 
@@ -308,7 +319,7 @@ $(document).ready(function() {
                                 text: data.msg,
                                 icon: "warning",
                                 confirmButtonText: "Ok",
-                                confirmButtonColor: '#6658dd',
+                                confirmButtonColor: '#3085d6',
                                 allowOutsideClick: false,
                             });
                         }
@@ -383,6 +394,10 @@ $(document).ready(function() {
             },
             processing:'<div class="text-center"><div class="spinner spinner-border"></div></div>'
         },
+        error: function (xhr, error, code)
+        {
+            tbl_pea_approval.reload();
+        },
         createdRow: function (row, data, index){
             if(data.AMAppDate != null && data.HRAppDate != null && data.ExecAppDate != null) {
                 $(row).css("background-color", "#BAE654");
@@ -428,65 +443,78 @@ $(document).ready(function() {
         });
 
         $('#btnApprove').on('click' ,function(){
-            swal.fire({
-                title: 'Enter PIN',
-                showCancelButton: true,
-                html: '<input type="password" id="pin" class="swal2-input" placeholder="Password"  maxlength="4">',
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes',
-                showLoaderOnConfirm: true,
-                allowOutsideClick: false,
-                preConfirm:(done) =>
-                {
-                    return new Promise(function(resolve, reject) {
-                    Swal.getCancelButton().setAttribute('disabled', '')
-                    var PIN = Swal.getPopup().querySelector('#pin').value
-                        $.post(WebURL + '/pin-check',{PIN:PIN},function(data){
-                            if(data == 1)
-                            {
-                                $.post(WebURL + '/PEA-batch-approval',{FiledID:batchApp},function(data){
-                                    if(data.num>=0)
-                                    {
-                                        swal.fire({
-                                            title: "Success!",
-                                            text: data.msg,
-                                            icon: "success",
-                                            confirmButtonText: "Ok",
-                                            confirmButtonColor: '#6658dd',
-                                            allowOutsideClick: false,
-                                        });
-                                        tbl_pea_approval.ajax.reload();
-                                    }
-                                    else
-                                    {
-                                        swal.fire({
-                                            title: "Warning!",
-                                            text: data.msg,
-                                            icon: "warning",
-                                            confirmButtonText: "Ok",
-                                            confirmButtonColor: '#6658dd',
-                                            allowOutsideClick: false,
-                                        });
-                                    }
-                                })
-                            }
-                            else
-                            {
-                                swal.fire({
-                                    title: "Warning!",
-                                    text: "Wrong PIN",
-                                    icon: "warning",
-                                    confirmButtonText: "Ok",
-                                    confirmButtonColor: '#6658dd',
-                                    allowOutsideClick: false,
-                                });
-                            }
+            if(batchApp.length <= 0)
+            {
+                swal.fire({
+                    title: "Warning!",
+                    text: "There are no selected employees",
+                    icon: "warning",
+                    confirmButtonText: "Ok",
+                    confirmButtonColor: '#3085d6',
+                    allowOutsideClick: false,
+                });
+            }
+            else
+            {
+                swal.fire({
+                    title: 'Enter PIN',
+                    showCancelButton: true,
+                    html: '<input type="password" id="pin" class="swal2-input" placeholder="####"  maxlength="4">',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: false,
+                    preConfirm:(done) =>
+                    {
+                        return new Promise(function(resolve, reject) {
+                        Swal.getCancelButton().setAttribute('disabled', '')
+                        var PIN = Swal.getPopup().querySelector('#pin').value
+                            $.post(WebURL + '/pin-check',{PIN:PIN},function(data){
+                                if(data == 1)
+                                {
+                                    $.post(WebURL + '/PEA-batch-approval',{FiledID:batchApp},function(data){
+                                        if(data.num>=0)
+                                        {
+                                            swal.fire({
+                                                title: "Success!",
+                                                text: data.msg,
+                                                icon: "success",
+                                                confirmButtonText: "Ok",
+                                                confirmButtonColor: '#3085d6',
+                                                allowOutsideClick: false,
+                                            });
+                                            tbl_pea_approval.ajax.reload();
+                                        }
+                                        else
+                                        {
+                                            swal.fire({
+                                                title: "Warning!",
+                                                text: data.msg,
+                                                icon: "warning",
+                                                confirmButtonText: "Ok",
+                                                confirmButtonColor: '#3085d6',
+                                                allowOutsideClick: false,
+                                            });
+                                        }
+                                    })
+                                }
+                                else
+                                {
+                                    swal.fire({
+                                        title: "Warning!",
+                                        text: "Wrong PIN",
+                                        icon: "warning",
+                                        confirmButtonText: "Ok",
+                                        confirmButtonColor: '#3085d6',
+                                        allowOutsideClick: false,
+                                    });
+                                }
 
-                        })
-                    });
-                }
-            })
+                            })
+                        });
+                    }
+                })
+            }
         })
 
     })

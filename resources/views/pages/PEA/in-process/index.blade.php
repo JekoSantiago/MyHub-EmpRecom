@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+@php use App\Helper\MyHelper; @endphp
 
 
 <div class="container-fluid">
@@ -87,7 +88,9 @@
                         <div class="col-md-12">
                             <div class="d-flex flex-wrap justify-content-between">
                                 <div class="text-sm-left">
+                                    @if(MyHelper::decrypt(Session::get('Department_ID')) != env('HR_DEPT_ID'))
                                     <button type="button" data-toggle="modal" data-target="#modal_new_pea" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-plus-circle mr-1"></i>Create New</button>
+                                    @endif
                                 </div>
 
                             </div>

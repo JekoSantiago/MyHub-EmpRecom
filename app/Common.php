@@ -35,4 +35,9 @@ class Common extends Model
        return DB::select('sp_EmpPIN_GET ?' , $data);
    }
 
+   public static function getDepartment()
+   {
+       return DB::select('sp_Department_get');
+   }
+
 }

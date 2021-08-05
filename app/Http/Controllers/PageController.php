@@ -40,11 +40,11 @@ class PageController extends Controller
             'isHR' =>  $isHR,
             'ApproveType' =>  $ApproveType
         ]);
-        $paramPEAFiled['forRating']      =  $request->input('forRating') ? : 0;
-        $paramPEAFiled['controlNo']        =  $request->input('controlNo') ? : '';
-        $paramPEAFiled['employeeName']        =  $request->input('employeeName') ? : '';
-        $paramPEAFiled['position']        =  $request->input('position') ? : 0;
-        $data['paramPEAFiled']    = $paramPEAFiled;
+        $paramPEAFiled['forRating']         =  $request->input('forRating') ? : 0;
+        $paramPEAFiled['controlNo']         =  $request->input('controlNo') ? : '';
+        $paramPEAFiled['employeeName']      =  $request->input('employeeName') ? : '';
+        $paramPEAFiled['position']          =  $request->input('position') ? : 0;
+        $data['paramPEAFiled']              = $paramPEAFiled;
 
 
         return view('pages.PEA.in-process.index',$data);
@@ -71,19 +71,65 @@ class PageController extends Controller
 
         $paramPEAApproval['forApproval']      =  $request->input('forApproval') ? : 0;
         $paramPEAApproval['controlNo']        =  $request->input('controlNo') ? : '';
-        $paramPEAApproval['employeeName']        =  $request->input('employeeName') ? : '';
-        $paramPEAApproval['position']        =  $request->input('position') ? : 0;
-        $paramPEAApproval['location']        =  $request->input('location') ? : 0;
-        $paramPEAApproval['fdatestart']        =  $request->input('fdatestart') ? : '';
-        $paramPEAApproval['fdateend']        =  $request->input('fdateend') ? : '';
-        $paramPEAApproval['hdatestart']        =  $request->input('hdatestart') ? : '';
-        $paramPEAApproval['hdateend']        =  $request->input('hdateend') ? : '';
+        $paramPEAApproval['employeeName']     =  $request->input('employeeName') ? : '';
+        $paramPEAApproval['position']         =  $request->input('position') ? : 0;
+        $paramPEAApproval['location']         =  $request->input('location') ? : 0;
+        $paramPEAApproval['fdatestart']       =  $request->input('fdatestart') ? : '';
+        $paramPEAApproval['fdateend']         =  $request->input('fdateend') ? : '';
+        $paramPEAApproval['hdatestart']       =  $request->input('hdatestart') ? : '';
+        $paramPEAApproval['hdateend']         =  $request->input('hdateend') ? : '';
         JavaScriptFacade::put([
             'ApproveType' =>  $ApproveType
         ]);
 
         $data['paramPEAApproval']    = $paramPEAApproval;
         return view('pages.PEA.approval.index',$data);
+    }
+
+    public function BIinProcess(Request $request)
+    {
+
+        $data['title'] ="BI Filed";
+        $paramBI['withBI']              =  $request->input('withBI') ? : 2;
+        $paramBI['employeeName']        =  $request->input('employeeName') ? : '';
+        $paramBI['position']            =  $request->input('position') ? : 0;
+        $paramBI['fdatestart']          =  $request->input('fdatestart') ? : '';
+        $paramBI['fdateend']            =  $request->input('fdateend') ? : '';
+        $data['paramBI']                = $paramBI;
+
+
+        return view('pages.BI.in-process.index',$data);
+    }
+
+
+    public function BIApproval(Request $request)
+    {
+
+        $data['title'] ="BI Approval";
+        $paramBI['appStatus']              =  $request->input('appStatus') ? : 2;
+        $paramBI['type']              =  $request->input('type') ? : 0;
+        $paramBI['employeeName']        =  $request->input('employeeName') ? : '';
+        $paramBI['position']            =  $request->input('position') ? : 0;
+        $paramBI['fdatestart']          =  $request->input('fdatestart') ? : '';
+        $paramBI['fdateend']            =  $request->input('fdateend') ? : '';
+        $data['paramBI']                = $paramBI;
+
+
+        return view('pages.BI.approval.index',$data);
+    }
+
+    public function NonReg(Request $request)
+    {
+
+        $data['title'] ="Non-Regular Approval";
+        $paramNonReg['forApproval']              =  $request->input('forApproval') ? : 2;
+        $paramNonReg['employeeName']        =  $request->input('employeeName') ? : '';
+        $paramNonReg['position']            =  $request->input('position') ? : 0;
+        $paramNonReg['department']            =  $request->input('department') ? : 0;
+        $data['paramNonReg']                = $paramNonReg;
+
+
+        return view('pages.NonReg.index',$data);
     }
 
 

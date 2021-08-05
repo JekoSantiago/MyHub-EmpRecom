@@ -3,7 +3,7 @@ $(document).ready(function() {
     var disableComm;
     var FiledID = $('#FiledID').val();
 
-    console.log(isCommented,ApproveType);
+    console.log(isCommented,ApproveType, isDisApp);
     if(isCommented == 3 && Qremain == 0)
     {
         $(".rad_1").attr('disabled',true);
@@ -11,9 +11,20 @@ $(document).ready(function() {
         $(".rad_3").attr('disabled',true);
         $(".rad_4").attr('disabled',true);
         $(".rad_5").attr('disabled',true);
+
+        if(isDisApp == 1 && ApproveType == 0)
+        {
+            disableComm = 0
+            $(".rad_1").attr('disabled',false);
+            $(".rad_2").attr('disabled',false);
+            $(".rad_3").attr('disabled',false);
+            $(".rad_4").attr('disabled',true);
+            $(".rad_5").attr('disabled',false);
+        }
+
         if(ApproveType == 1)
         {
-            disableComm == 1
+            disableComm = 1
             $("#PRA").attr('disabled',true);
             $("#SnE").attr('disabled',true);
             $("#SAR").attr('disabled',true);
@@ -22,7 +33,7 @@ $(document).ready(function() {
         }
         else if(ApproveType == 2)
         {
-            disableComm == 0
+            disableComm = 0
             $("#PRA").attr('disabled',false);
             $("#SnE").attr('disabled',false);
             $("#SAR").attr('disabled',false);
@@ -31,7 +42,7 @@ $(document).ready(function() {
         }
         else if(ApproveType == 3)
         {
-            disableComm == 1
+            disableComm = 1
             $("#PRA").attr('disabled',true);
             $("#SnE").attr('disabled',true);
             $("#SAR").attr('disabled',true);
@@ -160,7 +171,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -206,7 +217,7 @@ $(document).ready(function() {
                                     text: data.msg,
                                     icon: "warning",
                                     confirmButtonText: "Ok",
-                                    confirmButtonColor: '#6658dd',
+                                    confirmButtonColor: '#3085d6',
                                     allowOutsideClick: false,
                                 });
                             }
@@ -219,7 +230,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -258,7 +269,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -303,7 +314,7 @@ $(document).ready(function() {
                                     text: data.msg,
                                     icon: "warning",
                                     confirmButtonText: "Ok",
-                                    confirmButtonColor: '#6658dd',
+                                    confirmButtonColor: '#3085d6',
                                     allowOutsideClick: false,
                                 });
                             }
@@ -316,7 +327,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -355,7 +366,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -400,7 +411,7 @@ $(document).ready(function() {
                                     text: data.msg,
                                     icon: "warning",
                                     confirmButtonText: "Ok",
-                                    confirmButtonColor: '#6658dd',
+                                    confirmButtonColor: '#3085d6',
                                     allowOutsideClick: false,
                                 });
                             }
@@ -413,7 +424,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -468,7 +479,7 @@ $(document).ready(function() {
                                     text: data.msg,
                                     icon: "warning",
                                     confirmButtonText: "Ok",
-                                    confirmButtonColor: '#6658dd',
+                                    confirmButtonColor: '#3085d6',
                                     allowOutsideClick: false,
                                 });
                             }
@@ -481,7 +492,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -526,7 +537,7 @@ $(document).ready(function() {
                                     text: data.msg,
                                     icon: "warning",
                                     confirmButtonText: "Ok",
-                                    confirmButtonColor: '#6658dd',
+                                    confirmButtonColor: '#3085d6',
                                     allowOutsideClick: false,
                                 });
                             }
@@ -539,7 +550,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -578,7 +589,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -623,7 +634,7 @@ $(document).ready(function() {
                                     text: data.msg,
                                     icon: "warning",
                                     confirmButtonText: "Ok",
-                                    confirmButtonColor: '#6658dd',
+                                    confirmButtonColor: '#3085d6',
                                     allowOutsideClick: false,
                                 });
                             }
@@ -636,7 +647,7 @@ $(document).ready(function() {
                             text: data.msg,
                             icon: "warning",
                             confirmButtonText: "Ok",
-                            confirmButtonColor: '#6658dd',
+                            confirmButtonColor: '#3085d6',
                             allowOutsideClick: false,
                         });
                     }
@@ -690,6 +701,10 @@ $(document).ready(function() {
                 next: "<i class='mdi mdi-chevron-right'>"
             },
             processing:'<div class="text-center"><div class="spinner spinner-border"></div></div>'
+        },
+        error: function (xhr, error, code)
+        {
+            tbl_comment.ajax.reload();
         },
     });
 
@@ -780,7 +795,7 @@ $(document).ready(function() {
                                 text: data.msg,
                                 icon: "warning",
                                 confirmButtonText: "Ok",
-                                confirmButtonColor: '#6658dd',
+                                confirmButtonColor: '#3085d6',
                                 allowOutsideClick: false,
                             });
                         }
@@ -846,7 +861,7 @@ $(document).ready(function() {
                                 text: data.msg,
                                 icon: "warning",
                                 confirmButtonText: "Ok",
-                                confirmButtonColor: '#6658dd',
+                                confirmButtonColor: '#3085d6',
                                 allowOutsideClick: false,
                             });
                         }
@@ -958,7 +973,7 @@ $(document).ready(function() {
                                 text: data.msg,
                                 icon: "warning",
                                 confirmButtonText: "Ok",
-                                confirmButtonColor: '#6658dd',
+                                confirmButtonColor: '#3085d6',
                                 allowOutsideClick: false,
                             });
                         }
