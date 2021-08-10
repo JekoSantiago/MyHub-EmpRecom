@@ -35,7 +35,7 @@
                             @endif
                             @if(MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
                             <li>
-                                <a href="#" class="menu-collapsed">Reports</a>
+                                <a href="{{ route('PEA_Report') }}" class="menu-collapsed">Reports</a>
                             </li>
                             @endif
                         </ul>
@@ -61,9 +61,9 @@
                             <li>
                                 <a href="#" class="menu-collapsed">Approval</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="#" class="menu-collapsed">Reports</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
@@ -87,9 +87,9 @@
                             <li>
                                 <a href="#" class="menu-collapsed">Approval</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="#" class="menu-collapsed">Reports</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
@@ -122,27 +122,41 @@
                 </li>
                 @endif
 
+                @php
+                $checkAccessParams['moduleID'] = env('MODULE_NPA');
+                @endphp
+                @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ALL')]))
                 <li>
-                    <a href="#">
+                    <a href="{{ route('NPA') }}">
                         <i data-feather="user-check"></i>
                         <span> NPA Approval </span>
                     </a>
                 </li>
+                @endif
 
-
+                @php
+                $checkAccessParams['moduleID'] = env('MODULE_NONREG');
+                @endphp
+                @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ALL')]))
                 <li>
                     <a href="{{ route('NonReg') }}">
                         <i data-feather="user-x"></i>
                         <span> Non Reg Approval </span>
                     </a>
                 </li>
+                @endif
 
+                @php
+                $checkAccessParams['moduleID'] = env('MODULE_PROBI');
+                @endphp
+                @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ALL')]))
                 <li>
-                    <a href="#">
+                    <a href="{{ route('Probi') }}">
                         <i data-feather="user"></i>
                         <span> Probationary Employees </span>
                     </a>
                 </li>
+                @endif
 
 
             </ul>

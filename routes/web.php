@@ -31,9 +31,12 @@ Route::post('/pin-check','AuthController@getUserPIN');
 Route::get('/home','PageController@viewHome')->name('home');
 Route::any('/PEA-Filed','PageController@PEAinProcess')->name('PEA_Filed');
 Route::any('/PEA-Approval','PageController@PEAapproval')->name('PEA_Approval');
+Route::get('/PEA-Report','PageController@PEAReports')->name('PEA_Report');
 Route::any('/BI-Filed','PageController@BIinProcess')->name('BI_Filed');
 Route::any('/BI-Approval','PageController@BIapproval')->name('BI_Approval');
 Route::any('/Non-Reg','PageController@NonReg')->name('NonReg');
+Route::any('/NPA','PageController@NPA')->name('NPA');
+Route::any('/Probi','PageController@Probi')->name('Probi');
 
 
 
@@ -42,6 +45,9 @@ Route::get('/get-pos','OptionsController@getPosition');
 Route::get('/get-emp','OptionsController@getEmployeePEA');
 Route::get('/get-loc','OptionsController@getLocation');
 Route::get('/get-dept','OptionsController@getDepartment');
+
+//Probi
+Route::get('/probi-list','OptionsController@getEmployeeDatatable');
 
 
 //PEA
@@ -59,6 +65,7 @@ Route::post('/PEA-Approval-get','PEAController@getPEAApproved');
 Route::post('/PEA-Approval-insert','PEAController@insertApprovedFile');
 Route::post('/PEA-batch-approval','PEAController@batchApprovedFile');
 Route::post('/PEA-disapprove','PEAController@disApproveFile');
+Route::get('/PEA-report','ReportController@getNonRegReport');
 
 
 //BI
@@ -73,9 +80,17 @@ Route::post('/BI-approve','BIController@approveBI');
 Route::post('/NonReg-get','NonRegController@getNonRegApp');
 Route::post('/NonReg-approve','NonRegController@batchApprovedFile');
 
+//NPA
+Route::post('/NPA-get','NPAController@getNPA');
+Route::get('/NPA-Form/{id}','NPAController@getNPARec');
+Route::get('/NPA-showPEA/{id}','NPAController@showPEA');
+Route::post('/NPA-approve','NPAController@approveNPA');
+Route::post('/NPA-batch-app','NPAController@batchApprovedNPA');
+
+
 
 Route::get('/zxc',function(){
-    DD(Myhelper::decrypt(Session::get('Department_ID')));
+    DD(Myhelper::decrypt(Session::get('PositionLevel_ID')));
 });
 
 

@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-    console.log(ApproveType);
 
     $('#position').select2({
         placeholder: "Select Position"
@@ -516,10 +515,41 @@ $(document).ready(function() {
                 })
             }
         })
-
     })
 
+    var tbl_pea_reports = $('#tbl_pea_reports').DataTable({
+        processing: true,
+        serverSide: true,
+        scrollX: true,
+        ordering: false,
+        ajax      : {
+            url: WebURL + '/PEA-report',
+            method: 'GET',
+        },
+        columns   :[
+            {data:"Location"},
+            {data:"ACFullName"},
+            {data:"AMFullName"},
+            {data:"CountFailedSubmit"},
+            {data:"CountFailedAssessment"},
+            {data:"CountFailedAttendance"},
+            {data:"CountFailedAttitude"},
+            {data:"CountAwol"},
+            {data:"CountResigned"},
+            {data:"TotalPass"},
+            {data:"TotalEmp"},
 
+        ],
+        language: {
+            emptyTable: 'No data available.',
+            paginate: {
+                previous: "<i class='mdi mdi-chevron-left'>",
+                next: "<i class='mdi mdi-chevron-right'>"
+            },
+            processing:'<div class="text-center"><div class="spinner spinner-border"></div></div>'
+        },
+
+    });
 
 
  ///////

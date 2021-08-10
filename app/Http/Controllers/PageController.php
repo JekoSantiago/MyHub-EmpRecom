@@ -86,6 +86,12 @@ class PageController extends Controller
         return view('pages.PEA.approval.index',$data);
     }
 
+    public function PEAReports()
+    {
+        $data['title'] = "PEA Report";
+        return view ('pages.PEA.reports.index',$data);
+    }
+
     public function BIinProcess(Request $request)
     {
 
@@ -106,8 +112,8 @@ class PageController extends Controller
     {
 
         $data['title'] ="BI Approval";
-        $paramBI['appStatus']              =  $request->input('appStatus') ? : 2;
-        $paramBI['type']              =  $request->input('type') ? : 0;
+        $paramBI['appStatus']           =  $request->input('appStatus') ? : 2;
+        $paramBI['type']                =  $request->input('type') ? : 0;
         $paramBI['employeeName']        =  $request->input('employeeName') ? : '';
         $paramBI['position']            =  $request->input('position') ? : 0;
         $paramBI['fdatestart']          =  $request->input('fdatestart') ? : '';
@@ -123,13 +129,43 @@ class PageController extends Controller
 
         $data['title'] ="Non-Regular Approval";
         $paramNonReg['forApproval']              =  $request->input('forApproval') ? : 2;
-        $paramNonReg['employeeName']        =  $request->input('employeeName') ? : '';
-        $paramNonReg['position']            =  $request->input('position') ? : 0;
-        $paramNonReg['department']            =  $request->input('department') ? : 0;
-        $data['paramNonReg']                = $paramNonReg;
+        $paramNonReg['employeeName']             =  $request->input('employeeName') ? : '';
+        $paramNonReg['position']                 =  $request->input('position') ? : 0;
+        $paramNonReg['department']               =  $request->input('department') ? : 0;
+        $data['paramNonReg']                     = $paramNonReg;
 
 
         return view('pages.NonReg.index',$data);
+    }
+
+    public function NPA(Request $request)
+    {
+        $BatchApproval = 0;
+        if(MyHelper::decrypt(Session::get('PositionLevel_ID')) <= 2)
+        {
+            $BatchApproval = 1;
+        }
+
+        JavaScriptFacade::put([
+            'BatchApproval' =>  $BatchApproval
+        ]);
+
+        $data['title'] ="NPA Approval";
+        $paramNPA['forApproval']              =  $request->input('forApproval') ? : 2;
+        $paramNPA['employeeName']             =  $request->input('employeeName') ? : '';
+        $paramNPA['position']                 =  $request->input('position') ? : 0;
+        $paramNPA['department']               =  $request->input('department') ? : 0;
+        $data['paramNPA']                     = $paramNPA;
+
+
+        return view('pages.NPA.index',$data);
+    }
+
+    public function Probi()
+    {
+        $data['title'] = "List of Probationary";
+
+        return view('pages.Probi.index', $data);
     }
 
 

@@ -106,7 +106,7 @@ class BIController extends Controller
     {
         $param = [
             $request -> BI_ID,
-            $request -> employeeID,
+            MyHelper::decrypt(Session::get('Employee_ID')),
             1,
             MyHelper::decrypt(Session::get('Employee_ID')),
         ];

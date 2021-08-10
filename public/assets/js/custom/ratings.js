@@ -1,10 +1,11 @@
 $(document).ready(function() {
 
     var disableComm;
+    var hideComm;
     var FiledID = $('#FiledID').val();
 
-    console.log(isCommented,ApproveType, isDisApp);
-    if(isCommented == 3 && Qremain == 0)
+    console.log(isApproved,ApproveType, isDisApp);
+    if(isApproved == 1 && Qremain == 0)
     {
         $(".rad_1").attr('disabled',true);
         $(".rad_2").attr('disabled',true);
@@ -29,7 +30,7 @@ $(document).ready(function() {
             $("#SnE").attr('disabled',true);
             $("#SAR").attr('disabled',true);
             $("#recom_letter").attr('disabled',true);
-            $("#btnSaveEval").hide();
+            // $("#btnSaveEval").hide();
         }
         else if(ApproveType == 2)
         {
@@ -38,7 +39,7 @@ $(document).ready(function() {
             $("#SnE").attr('disabled',false);
             $("#SAR").attr('disabled',false);
             $("#recom_letter").attr('disabled',false);
-            $("#btnSaveEval").show();
+            // $("#btnSaveEval").show();
         }
         else if(ApproveType == 3)
         {
@@ -47,8 +48,9 @@ $(document).ready(function() {
             $("#SnE").attr('disabled',true);
             $("#SAR").attr('disabled',true);
             $("#recom_letter").attr('disabled',true);
-            $("#btnSaveEval").hide();
+            // $("#btnSaveEval").hide();
         }
+        hideComm = 0;
     }
     else
     {
@@ -65,7 +67,8 @@ $(document).ready(function() {
             $("#SnE").attr('disabled',true);
             $("#SAR").attr('disabled',true);
             $("#recom_letter").attr('disabled',true);
-            $("#btnSaveEval").hide();
+            // $("#btnSaveEval").hide();
+            disableComm = 1;
 
         }
         else
@@ -91,6 +94,16 @@ $(document).ready(function() {
             }
 
         }
+
+        if(Qremain == 0)
+        {
+            hideComm = 0;
+        }
+        else
+        {
+            hideComm = 1;
+        }
+
     }
 
 
@@ -152,6 +165,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
 
@@ -162,6 +176,11 @@ $(document).ready(function() {
                         else
                         {
                             $('#recomForm').hide();
+                        }
+
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
                         }
                     }
                     else
@@ -182,6 +201,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-insert',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
                         if(data.ave > 79)
@@ -192,6 +212,10 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
+                        }
 
                     }
                     else if(data.num==-1)
@@ -199,6 +223,7 @@ $(document).ready(function() {
                         $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                             if(data.num>=0)
                             {
+                                console.log(data);//radlog
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
                                 if(data.ave > 79)
@@ -208,6 +233,10 @@ $(document).ready(function() {
                                 else
                                 {
                                     $('#recomForm').hide();
+                                }
+                                if(data.qremain == 0)
+                                {
+                                    $('#com_1').show();
                                 }
                             }
                             else
@@ -251,6 +280,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
                         if(data.ave > 79)
@@ -260,6 +290,10 @@ $(document).ready(function() {
                         else
                         {
                             $('#recomForm').hide();
+                        }
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
                         }
                     }
                     else
@@ -280,6 +314,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-insert',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
                         if(data.ave > 79)
@@ -290,12 +325,17 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
+                        }
                     }
                     else if(data.num==-1)
                     {
                         $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                             if(data.num>=0)
                             {
+                                console.log(data);//radlog
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
                                 if(data.ave > 79)
@@ -305,6 +345,10 @@ $(document).ready(function() {
                                 else
                                 {
                                     $('#recomForm').hide();
+                                }
+                                if(data.qremain == 0)
+                                {
+                                    $('#com_1').show();
                                 }
                             }
                             else
@@ -348,6 +392,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
                         if(data.ave > 79)
@@ -357,6 +402,10 @@ $(document).ready(function() {
                         else
                         {
                             $('#recomForm').hide();
+                        }
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
                         }
                     }
                     else
@@ -377,6 +426,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-insert',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
                         if(data.ave > 79)
@@ -387,12 +437,17 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
+                        }
                     }
                     else if(data.num==-1)
                     {
                         $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                             if(data.num>=0)
                             {
+                                console.log(data);//radlog
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
                                 if(data.ave > 79)
@@ -402,6 +457,10 @@ $(document).ready(function() {
                                 else
                                 {
                                     $('#recomForm').hide();
+                                }
+                                if(data.qremain == 0)
+                                {
+                                    $('#com_1').show();
                                 }
                             }
                             else
@@ -445,6 +504,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
                         if(data.ave > 79)
@@ -455,12 +515,17 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
+                        }
                     }
                     else if(data.num==-1)
                     {
                         $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                             if(data.num>=0)
                             {
+                                console.log(data);//radlog
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
                                 if(data.ave > 79)
@@ -470,6 +535,10 @@ $(document).ready(function() {
                                 else
                                 {
                                     $('#recomForm').hide();
+                                }
+                                if(data.qremain == 0)
+                                {
+                                    $('#com_1').show();
                                 }
                             }
                             else
@@ -503,6 +572,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-insert',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
                         if(data.ave > 79)
@@ -513,12 +583,17 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
+                        }
                     }
                     else if(data.num==-1)
                     {
                         $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                             if(data.num>=0)
                             {
+                                console.log(data);//radlog
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
                                 if(data.ave > 79)
@@ -528,6 +603,10 @@ $(document).ready(function() {
                                 else
                                 {
                                     $('#recomForm').hide();
+                                }
+                                if(data.qremain == 0)
+                                {
+                                    $('#com_1').show();
                                 }
                             }
                             else
@@ -571,6 +650,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
                         if(data.ave > 79)
@@ -580,6 +660,10 @@ $(document).ready(function() {
                         else
                         {
                             $('#recomForm').hide();
+                        }
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
                         }
                     }
                     else
@@ -600,6 +684,7 @@ $(document).ready(function() {
                 $.post(WebURL + '/PEA-Rate-insert',formdata,function(data){
                     if(data.num>=0)
                     {
+                        console.log(data);//radlog
                         $('#AvePoint').text(data.ave);
                         rateScale();
                         if(data.ave > 79)
@@ -610,12 +695,17 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
+                        if(data.qremain == 0)
+                        {
+                            $('#com_1').show();
+                        }
                     }
                     else if(data.num==-1)
                     {
                         $.post(WebURL + '/PEA-Rate-update',formdata,function(data){
                             if(data.num>=0)
                             {
+                                console.log(data);//radlog
                                 $('#AvePoint').text(data.ave);
                                 rateScale();
                                 if(data.ave > 79)
@@ -625,6 +715,10 @@ $(document).ready(function() {
                                 else
                                 {
                                     $('#recomForm').hide();
+                                }
+                                if(data.qremain == 0)
+                                {
+                                    $('#com_1').show();
                                 }
                             }
                             else
@@ -656,7 +750,7 @@ $(document).ready(function() {
         }
     })
 
-
+    var hideID=[];
     var tbl_comment = $('#tbl_comment').DataTable({
         processing: true,
         serverSide: true,
@@ -673,8 +767,7 @@ $(document).ready(function() {
         columns   :[
                 {render:function(data,type,row)
                 {
-                    var icon = (row.EvalComment == null) ? '<a href="javascript:void(0)" class="text-info m_comment"> <i class="mdi mdi-24px mdi-comment-outline"></i> <a>' : '<a href="javascript:void(0)" class="text-info m_update"> <i class="mdi mdi-24px mdi-comment-processing-outline"></i> <a>'
-                    console.log(disableComm);
+                    var icon = (row.EvalComment == null) ? '<a href="javascript:void(0)" class="text-info m_comment" id="com_'+row.Month_ID+'"> <i class="mdi mdi-24px mdi-comment-outline"></i> <a>' : '<a href="javascript:void(0)" class="text-info m_update"> <i class="mdi mdi-24px mdi-comment-processing-outline"></i> <a>'
                     if(isHR == 0 && disableComm == 0)
                     {
                         return  icon ;
@@ -702,10 +795,31 @@ $(document).ready(function() {
             },
             processing:'<div class="text-center"><div class="spinner spinner-border"></div></div>'
         },
-        error: function (xhr, error, code)
-        {
-            tbl_comment.ajax.reload();
+        createdRow: function (row, data, index){
+            var nextID = parseInt(data.Month_ID) + 1
+            if(data.Filed_ID == null)
+            {
+                hideID.push('com_'+nextID);
+            }
+
         },
+        initComplete:function()
+        {
+            console.log(hideID);
+            if(hideComm == 1)
+            {
+                $('#com_1').hide();
+            }
+            hideID.forEach(com => {
+                $('#'+com).hide();
+            });
+
+            hideID=[];
+
+            console.log(hideID);
+
+        },
+
     });
 
     $('body').on('click','.m_comment',function(){
@@ -784,7 +898,13 @@ $(document).ready(function() {
                                 }).then(function (result) {
                                     if (true) {
                                         $('#modal_comment').modal('hide');
-                                        tbl_comment.ajax.reload( null, false );
+                                        hideID=[];
+                                        tbl_comment.ajax.reload( function(){
+                                            hideID.forEach(com => {
+                                                console.log(hideID);
+                                                $('#'+com).hide();
+                                            });
+                                        }, false );
                                     }
                                 })
                         }
@@ -850,7 +970,13 @@ $(document).ready(function() {
                                 }).then(function (result) {
                                     if (true) {
                                         $('#modal_comment').modal('hide');
-                                        tbl_comment.ajax.reload( null, false );
+                                        hideID=[];
+                                        tbl_comment.ajax.reload( function(){
+                                            console.log(hideID);
+                                            hideID.forEach(com => {
+                                                $('#'+com).hide();
+                                            });
+                                        }, false );
                                     }
                                 })
                         }

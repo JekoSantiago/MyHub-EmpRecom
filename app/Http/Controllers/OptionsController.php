@@ -27,7 +27,13 @@ class OptionsController extends Controller
 
     public function getEmployeePEA()
     {
-        $param = [0,0,MyHelper::decrypt(Session::get('Employee_ID')),0,5,''];
+        $param = [
+            0,
+            0,
+            MyHelper::decrypt(Session::get('Employee_ID')),
+            0,
+            0,
+            ''];
 
         // dd($param);
         $data =  PEA::getEmp($param);
@@ -39,6 +45,33 @@ class OptionsController extends Controller
         endforeach;
 
         echo $output;
+    }
+
+    public function getEmployeeDatatable()
+    {
+        if(MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
+        {
+            $id = 0;
+        }
+        else
+        {
+           $id =  MyHelper::decrypt(Session::get('Employee_ID'));
+        }
+
+        $param = [
+            0,
+            0,
+            $id,
+            0,
+            0,
+            ''];
+
+        // dd($param);
+        $data =  PEA::getEmp($param);
+
+        return datatables($data)->toJson();
+
+
     }
 
     public function getLocation()

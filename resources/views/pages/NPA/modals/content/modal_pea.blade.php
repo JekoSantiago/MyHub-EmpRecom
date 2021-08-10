@@ -1,51 +1,3 @@
-@extends('layouts.main')
-@section('content')
-@php
-use App\Helper\MyHelper;
-$checkAccessParams['userAccess'] = Session::get('UserAccess');
-$checkAccessParams['moduleID'] = env('MODULE_PEA');
-@endphp
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Probationary Employee Assessment</a></li>
-                    <li class="breadcrumb-item active">Ratings</li>
-                </ol>
-            </div>
-            <h4 class="page-title">Probationary Employee Assessment</h4>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-11">
-        <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C8F4F;">PEA</button> &nbsp;
-        <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #A7B941;">EP</button> &nbsp;
-        <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #A9772B;">RL</button> &nbsp;
-    </div>
-    <div class="col-lg-1 pt-1">
-        @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_APPROVE')]))
-        <a href="{{ route('PEA_Approval')}}"><button type="button" class="btn btn-outline-secondary">Back</button></a>
-        @else
-        <a href="{{ route('PEA_Filed') }}"><button type="button" class="btn btn-outline-secondary">Back</button></a>
-        @endif
-    </div>
-</div>
-@if (MyHelper::decrypt(Session::get('PositionLevel_ID')) == 5 && MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID') && $emp[0]->NumOfAnswered > 0)
-<div class="container-fluid pt-3" id="hr-warn">
-    <div class="row">
-        <div class="col-12">
-            <div class="card hr-warn" >
-                <div class="card-body text-light">
-                    <i class="mdi mdi-24px mdi-alert-circle-outline"></i> <span style="font-size: 120%"> This employee is already locked for regularization, actions at this state are disabled.</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endif
 
 <div class="container-fluid pt-3">
     <div class="row">
@@ -220,7 +172,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- <tr>
+                            <tr>
                                 <td>
                                     @if ($comment[0]->Filed_ID == NULL)
                                         <a href="javascript:void(0)" id="m1_comment" class="text-info">
@@ -270,7 +222,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
                                 <td>{{ $comment[2]->EvalComment }}</td>
                                 <td>{{ $comment[2]->EvalFullName}}</td>
                                 <td>{{ $comment[2]->DateComment }}</td>
-                            </tr> --}}
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -300,7 +252,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
     </div>
 </div>
 
-<div class="container-fluid pt-3">
+<div class="container-fluid pt-3" id="">
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -327,25 +279,6 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
                             </label>
                             <textarea name="SAR" id="SAR" cols="30" rows="6" class="form-control" form="form_emp_profile">{{ $emp[0]->Scope_Answer }}</textarea>
                             <label class="invalid-feedback" id="SAR_error">Please fill up the field</label>
-                        </div>
-                        <div class="row pt-2 d-flex">
-                            <div class="col-md-5">
-                                <button type="button" class="btn btn-success" name="btnSaveEval" id="btnSaveEval"
-                                @if((Myhelper::decrypt(Session::get('Department_ID')) == env('OPS_DEPT_ID') && $emp[0]->AMAppDate != null)  || (Myhelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID') && $emp[0]->HRAppDate != null) || ($emp[0]->ExecAppDate != null && Myhelper::decrypt(Session::get('PositionLevel_ID')) <= 2 &&  $emp[0]->DisAppDate != null) )
-                                style="display: none;" @endif>SAVE</button>
-                            </div>
-                            <div class="col">
-                                @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_APPROVE')]))
-                                    @if((Myhelper::decrypt(Session::get('Department_ID')) == env('OPS_DEPT_ID') && $emp[0]->AMAppDate == null)  || (Myhelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID') && $emp[0]->HRAppDate == null) || ($emp[0]->ExecAppDate == null && Myhelper::decrypt(Session::get('PositionLevel_ID')) <= 2 &&  $emp[0]->DisAppDate == null) )
-                                        <button type="button" class="btn btn-success" name="btnApprove" id="btnApprove">Approve</button>
-                                        @if(Myhelper::decrypt(Session::get('Department_ID')) == env('OPS_DEPT_ID') && Myhelper::decrypt(Session::get('PositionLevel_ID')) <= 2)
-                                        <button type="button" class="btn btn-danger" name="btnCancelApp" id="btnCancelApp">Cancel</button>
-                                        @else
-                                        <button type="button" class="btn btn-danger" name="btnDisapprove" id="btnDisapprove">Disapprove</button>
-                                        @endif
-                                    @endif
-                                @endif
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -384,9 +317,3 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
         </div>
     </div>
 </div>
-@include('pages.PEA.ratings.modal.comment')
-@endsection
-@section('js')
-<script src="{{ URL::asset('assets/js/custom/ratings.js')}}"></script>
-<script src="{{ URL::asset('assets/js/custom/approval.js')}}"></script>
-@endsection

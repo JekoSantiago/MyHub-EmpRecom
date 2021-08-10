@@ -99,9 +99,7 @@ class PEAController extends Controller
         ];
         $data['title'] = 'Ratings';
         $emp = PEA::getPEAFiled2($param);
-        $rating = PEA::getRatings([$id]);
-        $comment = PEA::getMonthlyComment([$id]);
-        $recom = PEA::getRecomLetter([$id]);
+        $rating = PEA::getRatings([$id]);;
 
         $data['emp'] = $emp;
         $data['chapter'] = DB::select('sp_chapter_get');
@@ -113,16 +111,9 @@ class PEAController extends Controller
         // dd($emp);
         $isHRRated = (intval($emp[0]->HRRateStatus));
         $isHR = (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID')) ? 1:0;
-        $countCom = 0;
         $isDisApp = (intval($emp[0]->isdisApproved) ? : 0) ;
+        $isApproved = (intval($emp[0]->AMAppDate) ? 1 : 0) ;
 
-        foreach ($comment as $com)
-        {
-            if (is_null($com->EvalComment) == false)
-            {
-                $countCom++;
-            }
-        }
 
         $Qremain = $emp[0]->NumOfQuestRemain;
 
@@ -144,10 +135,10 @@ class PEAController extends Controller
         JavaScriptFacade::put([
             'isHR' =>  $isHR,
             'isHRRated' => $isHRRated,
-            'isCommented' => $countCom,
             'ApproveType' => $ApproveType,
             'Qremain' => $Qremain,
-            'isDisApp' => $isDisApp
+            'isDisApp' => $isDisApp,
+            'isApproved' => $isApproved
         ]);
 
         return view ('pages.PEA.ratings.index', $data);
@@ -175,8 +166,9 @@ class PEAController extends Controller
         $num = $insert[0]->Q_RETURN;
         $msg = $insert[0]->Q_MSG;
         $ave = $refresh[0]->PerFactorTotal;
+        $qremain = $refresh[0]->QRemain;
 
-        $result = array('num' => $num, 'msg' => $msg, 'ave' => $ave);
+        $result = array('num' => $num, 'msg' => $msg, 'ave' => $ave, 'qremain' =>  $qremain);
         return $result;
     }
 
@@ -201,8 +193,9 @@ class PEAController extends Controller
         $num = $update[0]->Q_RETURN;
         $msg = $update[0]->Q_MSG;
         $ave = $refresh[0]->PerFactorTotal;
+        $qremain = $refresh[0]->QRemain;
 
-        $result = array('num' => $num, 'msg' => $msg, 'ave' => $ave);
+        $result = array('num' => $num, 'msg' => $msg, 'ave' => $ave, 'qremain' =>  $qremain);
         return $result;
     }
 
@@ -245,18 +238,7 @@ class PEAController extends Controller
 
     public function updateMonthlyComments(Request $request)
     {
-        if (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
-        {
-            $ApproveType = 2;
-        }
-        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 3)
-        {
-            $ApproveType = 1;
-        }
-        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) <= 2)
-        {
-            $ApproveType = 3;
-        }
+        $ApproveType = 1;
         $param = [
             $request->CommentID,
             $request->FiledID,

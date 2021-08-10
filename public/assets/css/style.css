@@ -155,3 +155,8 @@ background-color: rgb(77,97,112);
     font-size: small;
     line-height: 1px ;
   }
+
+  .hr-warn{
+    background-color: rgb(255,168,0);
+    margin: auto;
+  }
