@@ -86,7 +86,7 @@ $(document).ready(function() {
         {
             if(BatchApproval==0)
             {
-                tbl_npa.column(0).visible(false);
+            tbl_npa.column(0).visible(false);
             }
         }
 
@@ -95,6 +95,22 @@ $(document).ready(function() {
 
     $('#BtnFilterSubmitA').on('click', function(){
         tbl_npa.ajax.reload()
+        if($('#forApproval').val()==1)
+        {
+            if(BatchApproval > 0)
+            {
+                tbl_npa.column(0).visible(false);
+                $('#btnApprove').hide();
+            }
+        }
+        else
+        {
+            if(BatchApproval > 0)
+            {
+                tbl_npa.column(0).visible(true);
+                $('#btnApprove').show();
+            }
+        }
     })
 
     $('#btnApproveA').on('click' ,function(){

@@ -230,6 +230,7 @@ $(document).ready(function() {
             if(ApproveType == 3)
             {
                 tbl_pea_approval.column(0).visible(false);
+                $('#btnApprove').hide();
             }
         }
         else
@@ -237,6 +238,7 @@ $(document).ready(function() {
             if(ApproveType == 3)
             {
                 tbl_pea_approval.column(0).visible(true);
+                $('#btnApprove').show();
             }
         }
     })

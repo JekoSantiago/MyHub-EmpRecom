@@ -214,7 +214,7 @@ $(document).ready(function() {
             {data:"Department"},
             {data:"Position"},
             {data:"PositionLevel"},
-            {data:"DateFiled"}
+            {data:"FiledDate"}
 
         ],
         language: {

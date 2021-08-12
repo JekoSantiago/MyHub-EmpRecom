@@ -86,6 +86,16 @@ $(document).ready(function() {
 
     $('#BtnFilterSubmitA').on('click', function(){
         tbl_nonreg_approval.ajax.reload()
+        if($('#forApproval').val()==1)
+        {
+            tbl_nonreg_approval.column(0).visible(false);
+            $('#btnApprove').hide();
+        }
+        else
+        {
+            tbl_nonreg_approval.column(0).visible(true);
+            $('#btnApprove').show();
+        }
     })
 
 
