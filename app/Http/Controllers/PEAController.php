@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\BI;
 use App\Common;
 use App\Helper\MyHelper;
+use App\NonReg;
+use App\NPA;
 use App\PEA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -89,9 +92,11 @@ class PEAController extends Controller
 
     public function ratePEA($id)
     {
+        $userID = MyHelper::decrypt(Session::get('Employee_ID'));
+
         $param = [
             $id,
-            MyHelper::decrypt(Session::get('Employee_ID')),
+            $userID,
             0,
             0,
             '',
@@ -99,7 +104,34 @@ class PEAController extends Controller
         ];
         $data['title'] = 'Ratings';
         $emp = PEA::getPEAFiled2($param);
-        $rating = PEA::getRatings([$id]);;
+        $rating = PEA::getRatings([$id]);
+        $bi = BI::getBIApproval([1,'',0,0,'','',0]);
+        $nr = NonReg::getNonReg([1,'',0,0,0]);
+        $showNPA = 0;
+        $npaEmp =[];
+        if(MyHelper::decrypt(Session::get('PositionLevel_ID')) <= 3 && MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
+        {
+            $npa = NPA::getNPA([1,$userID,'','','',0,$userID]);
+            // dd($npa);
+            foreach($npa as $empNPA)
+            {
+                array_push($npaEmp,$empNPA->Employee_ID);
+            }
+            $showNPA = in_array($emp[0]->Employee_ID,$npaEmp) ? 1 : 0;
+        }
+        $biEmp = [];
+        $nrEmp = [];
+        foreach($bi as $empBI)
+        {
+            array_push($biEmp,$empBI->EmployeeID);
+        }
+        foreach($nr as $empNR)
+        {
+            array_push($nrEmp,$empNR->Employee_ID);
+        }
+        $showBI = in_array($emp[0]->Employee_ID,$biEmp) ? 1 : 0;
+        $showNR = in_array($emp[0]->Employee_ID,$nrEmp) ? 1 : 0;
+
 
         $data['emp'] = $emp;
         $data['chapter'] = DB::select('sp_chapter_get');
@@ -107,8 +139,11 @@ class PEAController extends Controller
         $data['option'] = DB::select('sp_PEA_RatingOption_Get');
         $data['scale'] = DB::select('sp_PEA_RatingScale_Get');
         $data['rating'] = $rating;
+        $data['showBI'] = $showBI;
+        $data['showNR'] = $showNR;
+        $data['showNPA'] = $showNPA;
 
-        // dd($emp);
+        // dd($nrEmp);
         $isHRRated = (intval($emp[0]->HRRateStatus));
         $isHR = (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID')) ? 1:0;
         $isDisApp = (intval($emp[0]->isdisApproved) ? : 0) ;
@@ -136,7 +171,7 @@ class PEAController extends Controller
             'isHR' =>  $isHR,
             'isHRRated' => $isHRRated,
             'ApproveType' => $ApproveType,
-            'Qremain' => $Qremain,
+            'Qremain' => intval($Qremain),
             'isDisApp' => $isDisApp,
             'isApproved' => $isApproved
         ]);

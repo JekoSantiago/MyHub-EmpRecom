@@ -21,7 +21,7 @@
 
     <div class="row">
         <div class="col-lg-11">
-            <button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C8F4F;">Print Non-Regular Summary</button> &nbsp;
+            <a href="{{ route('RPT_NR',['Employee_ID' => MyHelper::decrypt(Session::get('Employee_ID'))]) }}"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C8F4F;">Print Non-Regular Summary</button></a> &nbsp;
         </div>
     </div>
     <div class="row pt-4">

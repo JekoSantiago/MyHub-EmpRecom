@@ -23,6 +23,7 @@ class NPAController extends Controller
             MyHelper::decrypt(Session::get('Employee_ID')),
         ];
 
+        dd($param);
         $data = NPA::getNPA($param);
         return datatables($data)->toJson();
 

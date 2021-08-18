@@ -16,13 +16,11 @@ class ReportController extends Controller
 
     }
 
-    public function showRPTPEA()
+    public function showRPTPEA(Request $request)
     {
 
-        // $rptParam = 'From=' . $from . '|' .'To='. $to . '|' . 'HRID=' . $this->mylibrary->decrypted($this->session->Emp_Id);
-
-        $rptID = env('RPT_PEA');
-        $rptParam = '';
+        $rptID = env('RPT_PEA'); //25
+        $rptParam = 'Filed_ID='. $request->Filed_ID;
         $create = Report::createRPTSession($rptID, $rptParam);
         $result = $create[0]->RETURN;
 
@@ -33,13 +31,13 @@ class ReportController extends Controller
         endif;
     }
 
-    public function showRPTEP()
+    public function showRPTEP(Request $request)
     {
 
         // $rptParam = 'From=' . $from . '|' .'To='. $to . '|' . 'HRID=' . $this->mylibrary->decrypted($this->session->Emp_Id);
 
-        $rptID = env('RPT_EP');
-        $rptParam = '';
+        $rptID = env('RPT_EP'); //22
+        $rptParam = 'Filed_ID='.$request->Filed_ID;
         $create = Report::createRPTSession($rptID, $rptParam);
         $result = $create[0]->RETURN;
 
@@ -50,13 +48,13 @@ class ReportController extends Controller
         endif;
     }
 
-    public function showRPTRL()
+    public function showRPTNPA(Request $request)
     {
 
         // $rptParam = 'From=' . $from . '|' .'To='. $to . '|' . 'HRID=' . $this->mylibrary->decrypted($this->session->Emp_Id);
 
-        $rptID = env('RPT_RL');
-        $rptParam = '';
+        $rptID = env('RPT_NPA'); //24
+        $rptParam = 'Employee_ID='.$request->Employee_ID;
         $create = Report::createRPTSession($rptID, $rptParam);
         $result = $create[0]->RETURN;
 
@@ -67,13 +65,31 @@ class ReportController extends Controller
         endif;
     }
 
-    public function showRPTNonReg()
+    public function showRPTRL(Request $request)
+    {
+
+        // $rptParam = 'From=' . $from . '|' .'To='. $to . '|' . 'HRID=' . $this->mylibrary->decrypted($this->session->Emp_Id);
+
+        $rptID = ($request->RATINGS >=90) ? env('RPT_RL') : env('RPT_NRP');
+        $rptParam = ($request->RATINGS >=90) ? 'Filed_ID='. $request->Filed_ID : 'Employee_ID='.$request->Employee_ID;
+        $create = Report::createRPTSession($rptID, $rptParam);
+        $result = $create[0]->RETURN;
+
+        // dd($rptID,$rptParam);
+        if($result > 1) :
+            Redirect::to(env('RPT_URL') . '?ID=' . $result)->send();
+        else :
+	        abort(404);
+        endif;
+    }
+
+    public function showRPTNonReg(Request $request)
     {
 
         // $rptParam = 'From=' . $from . '|' .'To='. $to . '|' . 'HRID=' . $this->mylibrary->decrypted($this->session->Emp_Id);
 
         $rptID = env('RPT_NREG');
-        $rptParam = '';
+        $rptParam = '0';
         $create = Report::createRPTSession($rptID, $rptParam);
         $result = $create[0]->RETURN;
 
@@ -83,4 +99,24 @@ class ReportController extends Controller
 	        abort(404);
         endif;
     }
+
+    public function showRPTBI(Request $request)
+    {
+
+        // $rptParam = 'From=' . $from . '|' .'To='. $to . '|' . 'HRID=' . $this->mylibrary->decrypted($this->session->Emp_Id);
+
+        $rptID = env('RPT_BI'); //11
+        $rptParam = 'Employee_ID='.$request->Employee_ID;
+        $create = Report::createRPTSession($rptID, $rptParam);
+        $result = $create[0]->RETURN;
+
+        if($result > 1) :
+            Redirect::to(env('RPT_URL') . '?ID=' . $result)->send();
+        else :
+	        abort(404);
+        endif;
+    }
+
+
+
 }

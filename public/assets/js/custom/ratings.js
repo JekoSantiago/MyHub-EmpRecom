@@ -4,7 +4,7 @@ $(document).ready(function() {
     var hideComm;
     var FiledID = $('#FiledID').val();
 
-    console.log(isApproved,ApproveType, isDisApp);
+    console.log(isApproved,ApproveType,isDisApp,Qremain);
     if(isApproved == 1 && Qremain == 0)
     {
         $(".rad_1").attr('disabled',true);
@@ -73,7 +73,7 @@ $(document).ready(function() {
         }
         else
         {
-            if(isHRRated==1)
+            if(isHRRated==1 && ApproveType > 1)
             {
                 $(".rad_1").attr('disabled',false);
                 $(".rad_2").attr('disabled',false);
@@ -104,9 +104,16 @@ $(document).ready(function() {
             hideComm = 1;
         }
 
+        console.log(disableComm);
+
     }
 
 
+    if(disableComm==1)
+    {
+        $('body').find('input, textarea').attr('disabled','disabled');
+        $('#btnSaveEval').hide();
+    }
 
 
     function rateScale()

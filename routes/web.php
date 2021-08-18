@@ -87,6 +87,13 @@ Route::get('/NPA-showPEA/{id}','NPAController@showPEA');
 Route::post('/NPA-approve','NPAController@approveNPA');
 Route::post('/NPA-batch-app','NPAController@batchApprovedNPA');
 
+//REPORTS
+Route::get('/RPT-PEA','ReportController@showRPTPEA')->name('RPT_PEA');
+Route::get('/RPT-EP','ReportController@showRPTEP')->name('RPT_EP');
+Route::get('/RPT-NPA','ReportController@showRPTNPA')->name('RPT_NPA');
+Route::get('/RPT-RL','ReportController@showRPTRL')->name('RPT_RL');
+Route::get('/RPT-NonReg','ReportController@showRPTNonReg')->name('RPT_NR');
+Route::get('/RPT-BI','ReportController@showRPTBI')->name('RPT_BI');
 
 
 Route::get('/zxc',function(){
