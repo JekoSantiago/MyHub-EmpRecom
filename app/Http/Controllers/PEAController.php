@@ -157,7 +157,7 @@ class PEAController extends Controller
         {
             $ApproveType = 2;
         }
-        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 3)
+        else if(MyHelper::decrypt(Session::get('PositionLevel_ID')) == 3 )
         {
             $ApproveType = 1;
         }
@@ -165,6 +165,8 @@ class PEAController extends Controller
         {
             $ApproveType = 3;
         }
+
+        // dd($ApproveType);
 
 
         JavaScriptFacade::put([

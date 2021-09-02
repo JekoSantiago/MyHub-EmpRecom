@@ -4,8 +4,8 @@ $(document).ready(function() {
     var hideComm;
     var FiledID = $('#FiledID').val();
 
-    console.log(isApproved,ApproveType,isDisApp,Qremain);
-    if(isApproved == 1 && Qremain == 0)
+    console.log(isApproved,ApproveType,isDisApp,Qremain,isHR);
+    if(isApproved == 1 && Qremain ==0 )
     {
         $(".rad_1").attr('disabled',true);
         $(".rad_2").attr('disabled',true);
@@ -51,6 +51,8 @@ $(document).ready(function() {
             // $("#btnSaveEval").hide();
         }
         hideComm = 0;
+
+        console.log('X')
     }
     else
     {
@@ -73,7 +75,7 @@ $(document).ready(function() {
         }
         else
         {
-            if(isHRRated==1 && ApproveType > 1)
+            if(isHRRated==1 && ApproveType == 0)
             {
                 $(".rad_1").attr('disabled',false);
                 $(".rad_2").attr('disabled',false);
@@ -111,7 +113,7 @@ $(document).ready(function() {
 
     if(disableComm==1)
     {
-        $('body').find('input, textarea').attr('disabled','disabled');
+        $('body').find('textarea').attr('disabled','disabled');
         $('#btnSaveEval').hide();
     }
 
