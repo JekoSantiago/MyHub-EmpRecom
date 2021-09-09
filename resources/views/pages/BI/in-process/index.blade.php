@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="withBI"> BI Status: </label> <br>
-                                    <select name="withBI" id="withBI" class="form-control">
+                                    <select name="withBI" id="withBI" class="form-control select2no">
                                         <option value="0" @if ($paramBI['withBI'] == 0) {{ 'selected' }} @endif>Without BI</option>
                                         <option value="1" @if ($paramBI['withBI'] == 1) {{ 'selected' }} @endif>With BI</option>
                                         <option value="2" @if ($paramBI['withBI'] == 2) {{ 'selected' }} @endif>All</option>
@@ -66,6 +66,7 @@
                             <div class="row pl-5">
                                 <div class="col-md-12 pt-3">
                                     <button type="button" id="BtnFilterSubmit" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-magnify mr-1"></i>Search</button>
+                                    <button type="button" id="BtnFilterReset" class="btn btn-secondary waves-effect waves-light mb-2"><i class="mdi mdi-restart"></i></button>
                                 </div>
                             </div>
                         </div>

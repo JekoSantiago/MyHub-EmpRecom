@@ -8,6 +8,10 @@ $(document).ready(function() {
         minimumResultsForSearch: -1
     });
 
+    $('.select2no').select2({
+        minimumResultsForSearch: -1
+    });
+
     $.ajax({
         url:WebURL+'/get-pos',
         type:'GET',
@@ -299,6 +303,15 @@ $(document).ready(function() {
         })
     })
 
+    $('body').on('click', '#BtnFilterReset', function () {
+
+        $('#employeeName').val('');
+        $('#fdatestart').val('');
+        $('#fdateend').val('');
+        $('.select2').val(null).trigger('change');
+        $('#appStatus').val(2).trigger('change');
+
+    });
 
 
 ///

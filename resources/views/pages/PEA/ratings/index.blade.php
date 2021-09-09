@@ -21,15 +21,21 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
 
 <div class="row">
     <div class="col-lg-11">
+        @if($emp[0]->ExecAppDate != null)
         <a href="{{ route('RPT_PEA', ['Filed_ID' => request()->segment(2)]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C8F4F;">PEA</button> </a>&nbsp;
-        @if ($showNPA == 1 && Myhelper::decrypt(Session::get('PositionLevel_ID'))<=3 && MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
+        @endif
+        @if ($showNPA == 1 && MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
         <a href="{{ route('RPT_NPA',['Employee_ID' => $emp[0]->Employee_ID]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C788F;">NPA</button></a> &nbsp;
         @endif
         @if ($showBI == 1 && MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
         <a href="{{ route('RPT_BI',['Employee_ID' => $emp[0]->Employee_ID]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #8F2C3E;">BI</button></a> &nbsp;
         @endif
+        @if($emp[0]->ExecAppDate != null)
         <a href="{{ route('RPT_EP',['Filed_ID' => request()->segment(2)]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #A7B941;">EP</button></a> &nbsp;
+        @endif
+        @if($showNR == 1)
         <a href="{{ route('RPT_RL',['Filed_ID' => request()->segment(2), 'RATINGS' => $emp[0]->TotalPoint,'Employee_ID' => $emp[0]->Employee_ID]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #A9772B;">RL</button> </a>&nbsp;
+        @endif
     </div>
     <div class="col-lg-1 pt-1">
         @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_APPROVE')]))
@@ -285,7 +291,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
     </div>
 </div>
 <form id="form_emp_profile">
-    <input type="hidden" name="FiledIDRec" id="FiledIDRec" value="{{ $emp[0]->Filed_ID }}">\
+    <input type="hidden" name="FiledIDRec" id="FiledIDRec" value="{{ $emp[0]->Filed_ID }}">
     <input type="hidden" name="_token" id="globalToken" value="{{csrf_token()}}" />
 
 </form>

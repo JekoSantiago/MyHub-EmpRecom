@@ -30,9 +30,6 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
                     <div class="col-md-11">
                         <h4 class="text-white">Approval</h4>
                     </div>
-                    <div class="col">
-                       @if (MyHelper::decrypt(Session::get('PositionLevel_ID'))<=2) <button type="button" class="btn btn-success" name="btnApprove" id="btnApprove">Approve</button> @endif
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="d-flex flex-wrap">
@@ -40,7 +37,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="forApproval"> Approval Status: </label> <br>
-                                    <select name="forApproval" id="forApproval" class="form-control">
+                                    <select name="forApproval" id="forApproval" class="form-control select2no">
                                         <option value="0" @if ($paramNPA['forApproval'] == 0) {{ 'selected' }} @endif>For Approval</option>
                                         <option value="1" @if ($paramNPA['forApproval'] == 1) {{ 'selected' }} @endif>Approved</option>
                                     </select>
@@ -71,6 +68,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
                             <div class="row pl-5">
                                 <div class="col-md-12 pt-3">
                                     <button type="button" id="BtnFilterSubmitA" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-magnify mr-1"></i>Search</button>
+                                    <button type="button" id="BtnFilterReset" class="btn btn-secondary waves-effect waves-light mb-2"><i class="mdi mdi-restart"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -84,6 +82,11 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="row mb-1 text-center">
+                        <div class="col">
+                            @if (MyHelper::decrypt(Session::get('PositionLevel_ID'))<=2) <button type="button" class="btn btn-success" name="btnApprove" id="btnApprove">Approve</button> @endif
+                         </div>
+                    </div>
                     <table id="tbl_npa" class="table table-centered w-100 nowrap">
                         <thead>
                             <tr>
@@ -98,7 +101,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
                             </tr>
                         </thead>
                         <tbody>
-                        </tbody>
+                    </tbody>
                     </table>
                 </div>
             </div>

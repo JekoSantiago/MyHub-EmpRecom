@@ -31,7 +31,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="forRating"> Rate Status: </label> <br>
-                                    <select name="forRating" id="forRating" class="form-control">
+                                    <select name="forRating" id="forRating" class="form-control select2no">
+                                        <option value="-1" @if ($paramPEAFiled['forRating'] == -1) {{ 'selected' }} @endif>All</option>
                                         <option value="0" @if ($paramPEAFiled['forRating'] == 0) {{ 'selected' }} @endif>For Rating</option>
                                         <option value="1" @if ($paramPEAFiled['forRating'] == 1) {{ 'selected' }} @endif>Rated</option>
                                     </select>
@@ -60,6 +61,7 @@
                             <div class="row pl-5">
                                 <div class="col-md-12 pt-3">
                                     <button type="button" id="BtnFilterSubmit" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-magnify mr-1"></i>Search</button>
+                                    <button type="button" id="BtnFilterReset" class="btn btn-secondary waves-effect waves-light mb-2"><i class="mdi mdi-restart"></i></button>
                                 </div>
                             </div>
                         </div>

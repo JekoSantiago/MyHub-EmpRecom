@@ -24,7 +24,7 @@ class ReportController extends Controller
         $create = Report::createRPTSession($rptID, $rptParam);
         $result = $create[0]->RETURN;
 
-        if($result > 1) :
+        if($result != null) :
             Redirect::to(env('RPT_URL') . '?ID=' . $result)->send();
         else :
 	        abort(404);
@@ -41,7 +41,7 @@ class ReportController extends Controller
         $create = Report::createRPTSession($rptID, $rptParam);
         $result = $create[0]->RETURN;
 
-        if($result > 1) :
+        if($result != -1) :
             Redirect::to(env('RPT_URL') . '?ID=' . $result)->send();
         else :
 	        abort(404);
@@ -58,7 +58,7 @@ class ReportController extends Controller
         $create = Report::createRPTSession($rptID, $rptParam);
         $result = $create[0]->RETURN;
 
-        if($result > 1) :
+        if($result != -1) :
             Redirect::to(env('RPT_URL') . '?ID=' . $result)->send();
         else :
 	        abort(404);
@@ -76,7 +76,7 @@ class ReportController extends Controller
         $result = $create[0]->RETURN;
 
         // dd($rptID,$rptParam);
-        if($result > 1) :
+        if($result != -1) :
             Redirect::to(env('RPT_URL') . '?ID=' . $result)->send();
         else :
 	        abort(404);
@@ -93,7 +93,7 @@ class ReportController extends Controller
         $create = Report::createRPTSession($rptID, $rptParam);
         $result = $create[0]->RETURN;
 
-        if($result > 1) :
+        if($result != -1) :
             Redirect::to(env('RPT_URL') . '?ID=' . $result)->send();
         else :
 	        abort(404);
@@ -110,7 +110,7 @@ class ReportController extends Controller
         $create = Report::createRPTSession($rptID, $rptParam);
         $result = $create[0]->RETURN;
 
-        if($result > 1) :
+        if($result != -1) :
             Redirect::to(env('RPT_URL') . '?ID=' . $result)->send();
         else :
 	        abort(404);

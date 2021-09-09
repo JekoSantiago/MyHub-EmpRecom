@@ -8,6 +8,10 @@ $(document).ready(function() {
         placeholder: "Select Department"
     });
 
+    $('.select2no').select2({
+        minimumResultsForSearch: -1
+    });
+
     $.ajax({
         url:WebURL+'/get-dept',
         type:'GET',
@@ -189,81 +193,80 @@ $(document).ready(function() {
             batchApp.push($(this).val());
         });
 
-        $('#btnApprove').on('click' ,function(){
-            if(batchApp.length <= 0)
-            {
-                swal.fire({
-                    title: "Warning!",
-                    text: "There are no selected employees",
-                    icon: "warning",
-                    confirmButtonText: "Ok",
-                    confirmButtonColor: '#3085d6',
-                    allowOutsideClick: false,
-                });
-            }
-            else
-            {
-                swal.fire({
-                    title: 'Enter PIN',
-                    showCancelButton: true,
-                    html: '<input type="password" id="pin" class="swal2-input" placeholder="####"  maxlength="4">',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'Yes',
-                    showLoaderOnConfirm: true,
-                    allowOutsideClick: false,
-                    preConfirm:(done) =>
-                    {
-                        return new Promise(function(resolve, reject) {
-                        Swal.getCancelButton().setAttribute('disabled', '')
-                        var PIN = Swal.getPopup().querySelector('#pin').value
-                            $.post(WebURL + '/pin-check',{PIN:PIN},function(data){
-                                if(data == 1)
-                                {
-                                    $.post(WebURL + '/NPA-batch-app',{EmpIDs:batchApp},function(data){
-                                        if(data.num>=0)
-                                        {
-                                            swal.fire({
-                                                title: "Success!",
-                                                text: data.msg,
-                                                icon: "success",
-                                                confirmButtonText: "Ok",
-                                                confirmButtonColor: '#3085d6',
-                                                allowOutsideClick: false,
-                                            });
-                                            tbl_npa.ajax.reload();
-                                        }
-                                        else
-                                        {
-                                            swal.fire({
-                                                title: "Warning!",
-                                                text: data.msg,
-                                                icon: "warning",
-                                                confirmButtonText: "Ok",
-                                                confirmButtonColor: '#3085d6',
-                                                allowOutsideClick: false,
-                                            });
-                                        }
-                                    })
-                                }
-                                else
-                                {
-                                    swal.fire({
-                                        title: "Warning!",
-                                        text: "Wrong PIN",
-                                        icon: "warning",
-                                        confirmButtonText: "Ok",
-                                        confirmButtonColor: '#3085d6',
-                                        allowOutsideClick: false,
-                                    });
-                                }
+        if(batchApp.length <= 0)
+        {
+            swal.fire({
+                title: "Warning!",
+                text: "There are no selected employees",
+                icon: "warning",
+                confirmButtonText: "Ok",
+                confirmButtonColor: '#3085d6',
+                allowOutsideClick: false,
+            });
+        }
+        else
+        {
+            swal.fire({
+                title: 'Enter PIN',
+                showCancelButton: true,
+                html: '<input type="password" id="pin" class="swal2-input" placeholder="####"  maxlength="4">',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes',
+                showLoaderOnConfirm: true,
+                allowOutsideClick: false,
+                preConfirm:(done) =>
+                {
+                    return new Promise(function(resolve, reject) {
+                    Swal.getCancelButton().setAttribute('disabled', '')
+                    var PIN = Swal.getPopup().querySelector('#pin').value
+                        $.post(WebURL + '/pin-check',{PIN:PIN},function(data){
+                            if(data == 1)
+                            {
+                                $.post(WebURL + '/NPA-batch-app',{EmpIDs:batchApp},function(data){
+                                    if(data.num>=0)
+                                    {
+                                        swal.fire({
+                                            title: "Success!",
+                                            text: data.msg,
+                                            icon: "success",
+                                            confirmButtonText: "Ok",
+                                            confirmButtonColor: '#3085d6',
+                                            allowOutsideClick: false,
+                                        });
+                                        tbl_npa.ajax.reload();
+                                        $('#checkAll').attr('checked',false);
 
-                            })
-                        });
-                    }
-                })
-            }
-        })
+                                    }
+                                    else
+                                    {
+                                        swal.fire({
+                                            title: "Warning!",
+                                            text: data.msg,
+                                            icon: "warning",
+                                            confirmButtonText: "Ok",
+                                            confirmButtonColor: '#3085d6',
+                                            allowOutsideClick: false,
+                                        });
+                                    }
+                                })
+                            }
+                            else
+                            {
+                                swal.fire({
+                                    title: "Warning!",
+                                    text: "Wrong PIN",
+                                    icon: "warning",
+                                    confirmButtonText: "Ok",
+                                    confirmButtonColor: '#3085d6',
+                                    allowOutsideClick: false,
+                                });
+                            }
 
+                        })
+                    });
+                }
+            })
+        }
     })
 
     $('#modal_pea').on('show.bs.modal', function (e) {
@@ -278,6 +281,12 @@ $(document).ready(function() {
         });
     });
 
+
+    $('body').on('click', '#BtnFilterReset', function () {
+
+        $('#employeeName').val('');
+        $('.select2').val(null).trigger('change');
+    });
 
 //
 })

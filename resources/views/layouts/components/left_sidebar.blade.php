@@ -25,7 +25,7 @@
                         <ul class="nav-second-level">
                             @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ALL')]) || MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ADD')]) || MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_EDIT')]))
                             <li>
-                                <a href="{{route('PEA_Filed')}}" class="menu-collapsed">In-process</a>
+                                <a href="{{route('PEA_Filed')}}" class="menu-collapsed">In-Process</a>
                             </li>
                             @endif
                             @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ALL')]) || MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_APPROVE')]) )
@@ -56,7 +56,7 @@
                     <div class="collapse sidebar-submenu" id="sidebarRFNSP" style="">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="#" class="menu-collapsed">In-process</a>
+                                <a href="#" class="menu-collapsed">In-Process</a>
                             </li>
                             <li>
                                 <a href="#" class="menu-collapsed">Approval</a>
@@ -82,7 +82,7 @@
                     <div class="collapse sidebar-submenu" id="sidebarLeaders" style="">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="#" class="menu-collapsed">In-process</a>
+                                <a href="#" class="menu-collapsed">In-Process</a>
                             </li>
                             <li>
                                 <a href="#" class="menu-collapsed">Approval</a>
@@ -109,7 +109,7 @@
                         <ul class="nav-second-level">
                             @if(Myhelper::decrypt(Session::get('PositionLevel_ID')) > 3)
                             <li>
-                                <a href="{{route('BI_Filed')}}" class="menu-collapsed">In-process</a>
+                                <a href="{{route('BI_Filed')}}" class="menu-collapsed">In-Process</a>
                             </li>
                             @endif
                             @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_APPROVE')]) )

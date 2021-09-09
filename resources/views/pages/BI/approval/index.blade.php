@@ -27,7 +27,7 @@
                         <h4 class="text-white">Approval</h4>
                     </div>
                     <div class="col">
-                        <select name="type" id="type" class="form-control">
+                        <select name="type" id="type" class="form-control select2no">
                             <option value="0" @if ($paramBI['type'] == 0) {{ 'selected' }} @endif>All</option>
                             <option value="1" @if ($paramBI['type'] == 1) {{ 'selected' }} @endif>PEA</option>
                             <option value="2" @if ($paramBI['type'] == 2) {{ 'selected' }} @endif>PARS - RF & NSP</option>
@@ -41,7 +41,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label for="appStatus"> BI Status: </label> <br>
-                                    <select name="appStatus" id="appStatus" class="form-control">
+                                    <select name="appStatus" id="appStatus" class="form-control select2no">
                                         <option value="0" @if ($paramBI['appStatus'] == 0) {{ 'selected' }} @endif>For Approval</option>
                                         <option value="1" @if ($paramBI['appStatus'] == 1) {{ 'selected' }} @endif>Approved</option>
                                         <option value="2" @if ($paramBI['appStatus'] == 2) {{ 'selected' }} @endif>All</option>
@@ -76,6 +76,7 @@
                             <div class="row pl-5">
                                 <div class="col-md-12 pt-3">
                                     <button type="button" id="BtnFilterSubmitA" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-magnify mr-1"></i>Search</button>
+                                    <button type="button" id="BtnFilterReset" class="btn btn-secondary waves-effect waves-light mb-2"><i class="mdi mdi-restart"></i></button>
                                 </div>
                             </div>
                         </div>
