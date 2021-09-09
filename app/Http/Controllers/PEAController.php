@@ -26,6 +26,7 @@ class PEAController extends Controller
             $request->position ? : 0
         ];
 
+        // dd($param);
         $data = PEA::getPEAFiled($param);
 
         return datatables($data)->toJson();
@@ -109,29 +110,43 @@ class PEAController extends Controller
         $nr = NonReg::getNonReg([1,'',0,0,0]);
         $showNPA = 0;
         $npaEmp =[];
-        if(MyHelper::decrypt(Session::get('PositionLevel_ID')) <= 3 && MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
+        // dump($emp);
+        if(MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
         {
             $npa = NPA::getNPA([1,$userID,'','','',0,$userID]);
-            // dd($npa);
             foreach($npa as $empNPA)
             {
-                array_push($npaEmp,$empNPA->Employee_ID);
+                if($empNPA->ApprovedDate != null)
+                {
+                    array_push($npaEmp,$empNPA->Employee_ID);
+                }
             }
             $showNPA = in_array($emp[0]->Employee_ID,$npaEmp) ? 1 : 0;
         }
         $biEmp = [];
         $nrEmp = [];
+
         foreach($bi as $empBI)
         {
-            array_push($biEmp,$empBI->EmployeeID);
+            if($empBI->BI_Approved = 1)
+            {
+                array_push($biEmp,$empBI->EmployeeID);
+            }
         }
         foreach($nr as $empNR)
         {
             array_push($nrEmp,$empNR->Employee_ID);
         }
         $showBI = in_array($emp[0]->Employee_ID,$biEmp) ? 1 : 0;
-        $showNR = in_array($emp[0]->Employee_ID,$nrEmp) ? 1 : 0;
 
+        if($emp[0]->TotalPoint >= 90)
+        {
+            $showNR = ($emp[0]->ExecAppDate != null) ? 1 : 0;
+        }
+        else
+        {
+            $showNR = in_array($emp[0]->Employee_ID,$nrEmp) ? 1 : 0;
+        }
 
         $data['emp'] = $emp;
         $data['chapter'] = DB::select('sp_chapter_get');
@@ -148,7 +163,6 @@ class PEAController extends Controller
         $isHR = (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID')) ? 1:0;
         $isDisApp = (intval($emp[0]->isdisApproved) ? : 0) ;
         $isApproved = (intval($emp[0]->AMAppDate) ? 1 : 0) ;
-
 
         $Qremain = $emp[0]->NumOfQuestRemain;
 
