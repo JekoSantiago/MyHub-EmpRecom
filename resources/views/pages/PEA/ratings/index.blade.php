@@ -21,7 +21,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
 
 <div class="row">
     <div class="col-lg-11">
-        @if($emp[0]->ExecAppDate != null)
+        @if($emp[0]->NumOfQuestRemain == 0)
         <a href="{{ route('RPT_PEA', ['Filed_ID' => request()->segment(2)]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C8F4F;">PEA</button> </a>&nbsp;
         @endif
         @if ($showNPA == 1 && MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
@@ -51,7 +51,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
         <div class="col-12">
             <div class="card hr-warn" >
                 <div class="card-body text-light">
-                    <i class="mdi mdi-24px mdi-alert-circle-outline"></i> <span style="font-size: 120%"> This employee is already locked for regularization, actions at this state are disabled.</span>
+                    <i class="mdi mdi-24px mdi-alert-circle-outline"></i> <span style="font-size: 120%"> This employee is already rated by AC for regularization, actions at this state are disabled.</span>
                 </div>
             </div>
         </div>
@@ -296,7 +296,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
 
 </form>
 
-<div class="container-fluid pt-3" id="recomForm" @if($emp[0]->TotalPoint <= 79) style="display: none" @endif>
+<div class="container-fluid pt-3" id="recomForm" @if($emp[0]->TotalPoint <= env('PASSING ')) style="display: none" @endif>
     <div class="row">
         <div class="col-12">
             <div class="card">

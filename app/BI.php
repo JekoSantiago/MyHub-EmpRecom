@@ -29,7 +29,7 @@ class BI extends Model
 
     public static function getBIApproval($data)
     {
-        return DB::select('sp_BI_Approval_Get ?,?,?,?,?,?,?' , $data);
+        return DB::select('sp_BI_Approval_Get ?,?,?,?,?,?,?,?' , $data);
     }
 
     public static function approveBI($data)

@@ -9,7 +9,7 @@ class NonReg extends Model
 {
     public static function getNonReg($data)
     {
-        return DB::select('sp_NonRegLetter_Approval_Get ?,?,?,?,?', $data);
+        return DB::select('sp_NonRegLetter_Approval_Get ?,?,?,?,?,?', $data);
     }
 
     public static function approveNonReg($data)

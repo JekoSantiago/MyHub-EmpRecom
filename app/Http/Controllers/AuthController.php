@@ -8,6 +8,7 @@ use App\UserDetails;
 use Illuminate\Support\Facades\Session;
 use App\Helper\MyHelper;
 use Carbon\Carbon;
+use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redirect;
 use Throwable;
@@ -23,9 +24,7 @@ class AuthController extends Controller
         }
         catch (Throwable $e)
         {
-            // dd($e);
-            abort(500);
-
+            return redirect()->away(env('MYHUB_URL'));
         }
 
 
@@ -75,6 +74,7 @@ class AuthController extends Controller
     public function logout()
     {
         Artisan::call('cache:clear');
+        Session::flush();
         return  Redirect::to(env('MYHUB_LOGOUT_URL'));
     }
 

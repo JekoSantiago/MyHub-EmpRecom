@@ -105,15 +105,16 @@ class PEAController extends Controller
         ];
         $data['title'] = 'Ratings';
         $emp = PEA::getPEAFiled2($param);
+        dump($emp);
+        $empID = $emp[0]->Employee_ID;
         $rating = PEA::getRatings([$id]);
-        $bi = BI::getBIApproval([1,'',0,0,'','',0]);
-        $nr = NonReg::getNonReg([1,'',0,0,0]);
+        $bi = BI::getBIApproval([1,'',0,0,'','',0,$empID]);
+        $nr = NonReg::getNonReg([1,'',0,0,0,$empID]);
         $showNPA = 0;
         $npaEmp =[];
-        // dump($emp);
         if(MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
         {
-            $npa = NPA::getNPA([1,$userID,'','','',0,$userID]);
+            $npa = NPA::getNPA([1,$userID,'','','',0,0,$empID]);
             foreach($npa as $empNPA)
             {
                 if($empNPA->ApprovedDate != null)

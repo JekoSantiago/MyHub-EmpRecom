@@ -236,7 +236,7 @@
 
 </form>
 
-<div class="container-fluid pt-3" id="recomForm" @if($emp[0]->TotalPoint <= 79) style="display: none" @endif>
+<div class="container-fluid pt-3" id="recomForm" @if($emp[0]->TotalPoint <= env('PASSING')) style="display: none" @endif>
     <div class="row">
         <div class="col-12">
             <div class="card">
