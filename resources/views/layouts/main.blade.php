@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <title>{{ ($title ?? '') . ' | ' . env('APP_NAME', 'HR Training Monitoring') }}</title>
-
+    <link rel="icon" href="{!! asset('assets/images/myhublogo.png') !!}"/>
     @include('layouts.components.header_css')
 </head>
 

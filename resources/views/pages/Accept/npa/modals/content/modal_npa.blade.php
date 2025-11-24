@@ -1,35 +1,3 @@
-@extends('layouts.main')
-@section('content')
-@php
-use App\Helper\MyHelper;
-$checkAccessParams['userAccess'] = Session::get('UserAccess');
-$checkAccessParams['moduleID'] = env('MODULE_BI');
-@endphp
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Notice of Personnel Action</a></li>
-                    <li class="breadcrumb-item active">NPA Form</li>
-                </ol>
-            </div>
-            <h4 class="page-title">Notice of Personnel Action</h4>
-        </div>
-    </div>
-</div>
-
-<div class="row  d-flex">
-    <div class="col-lg-10">
-    </div>
-    <div class="col-lg-1 pt-1">
-        <button type="button" data-toggle="modal" data-target="#modal_pea" class="btn btn-danger waves-effect waves-light">PEA</button>
-    </div>
-    <div class="col-lg-1 pt-1">
-        <a href="{{ route('NPA') }}"><button type="button" class="btn btn-outline-secondary">Back</button></a>
-    </div>
-</div>
-
 <div class="container-fluid pt-3">
     <div class="row">
         <div class="col-12">
@@ -37,6 +5,8 @@ $checkAccessParams['moduleID'] = env('MODULE_BI');
                 <div class="card-body">
                     <input type="hidden" id="FileID" value="{{ $emp[0]->Filed_ID }}">
                     <input type="hidden" id="EmpID" value="{{ $emp[0]->Employee_ID }}">
+                    <input type="hidden" id="EmpNo" value="{{ $emp[0]->EmployeeNo }}">
+
                     <table class="table table-bordered">
                         <tbody>
                             <tr rowspan='2'>
@@ -47,7 +17,7 @@ $checkAccessParams['moduleID'] = env('MODULE_BI');
                                     <h5 class="text-center"><b>NOTICE OF PERSONNEL ACTION</b></h5>
                                 </td>
                                 <td colspan="2">
-                                    <b class="text-dark">DATE</b>
+                                    <b class="text-dark">DATE</b><br>{{ date('Y-m-d',strtotime($emp[0]->DateRecommended)) }}
                                 </td>
                             </tr>
                             <tr rowspan='2'>
@@ -142,16 +112,12 @@ $checkAccessParams['moduleID'] = env('MODULE_BI');
                                     <b class="text-dark">Transfer</b>
                                 </td>
                                 <td>
-
                                 </td>
                                 <td>
-
                                 </td>
                                 <td>
-
                                 </td>
                                 <td>
-
                                 </td>
                             </tr>
                             <tr>
@@ -159,16 +125,12 @@ $checkAccessParams['moduleID'] = env('MODULE_BI');
                                     <b class="text-dark">Others</b>
                                 </td>
                                 <td>
-
                                 </td>
                                 <td>
-
                                 </td>
                                 <td>
-
                                 </td>
                                 <td>
-
                                 </td>
                             </tr>
                             <tr>
@@ -191,19 +153,21 @@ $checkAccessParams['moduleID'] = env('MODULE_BI');
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">
-                                    <b class="text-dark">RECOMMENDED BY</b><br>{{ $emp[0]->RecommendedBy }}
+                                <td colspan="2" rowspan="2">
+                                    <b class="text-dark">RECOMMENDED BY</b><br>{{ $emp[0]->RecommendedBy . ' - ' . date('Y-m-d',strtotime($emp[0]->DateRecommended)) }}
                                 </td>
+                            </tr>
+                            <tr>
                                 <td colspan="3">
-                                    <b class="text-dark">CHECKED & REVIEWED BY</b><br>{{ $emp[0]->CheckedAndReviewed1 }} @if($emp[0]->CheckedAndReviewed2 != NULL) / {{ $emp[0]->CheckedAndReviewed2 }}  @endif  @if($emp[0]->CheckedAndReviewed3 != NULL) / {{ $emp[0]->CheckedAndReviewed3 }}  @endif
+                                    <b class="text-dark">CHECKED & REVIEWED BY</b><br>{{ $emp[0]->CheckedAndReviewed1 . ' - ' .  date('Y-m-d',strtotime($emp[0]->CheckAndReviewed1Date)) }}  @if($emp[0]->CheckedAndReviewed2 != NULL) <br> {{ $emp[0]->CheckedAndReviewed2 . ' - ' . date('Y-m-d',strtotime($emp[0]->CheckAndReviewed2Date)) }}  @endif  @if($emp[0]->CheckedAndReviewed3 != NULL) <br> {{ $emp[0]->CheckedAndReviewed3 . ' - ' .  date('Y-m-d',strtotime($emp[0]->CheckAndReviewed3Date))  }}  @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <b class="text-dark">APPROVED BY</b><br>{{ $emp[0]->ApprovedBy }}
+                                    <b class="text-dark">APPROVED BY</b><br>{{ $emp[0]->ApprovedBy . ' - ' . date('Y-m-d',strtotime($emp[0]->ApprovedDate))}}
                                 </td>
                                 <td colspan="2">
-                                    <b class="text-dark">ACCEPTED BY</b><br>@if($emp[0]->AcceptedBy != NULL){{  $emp[0]->FullName }} @endif
+                                    <b class="text-dark">ACCEPTED BY</b><br>{{ $emp[0]->AcceptedBy }}
                                 </td>
                                 <td>
                                     <b class="text-dark">DATE</b><br>@if($emp[0]->AcceptedDate != NULL){{ date('Y-m-d',strtotime($emp[0]->AcceptedDate)) }}@endif
@@ -228,7 +192,7 @@ $checkAccessParams['moduleID'] = env('MODULE_BI');
                     @if ($AppEnable == 1)
                     <div class="row">
                         <div class="col-md-12 pt-3 text-center">
-                            <button type="button" class="btn btn-success" name="btnApproveA" id="btnApproveA">Approve</button>
+                            <button type="button" class="btn btn-success" name="btnAcceptNPA" id="btnAcceptNPA">Accept</button>
                         </div>
                     </div>
                     @endif
@@ -237,8 +201,3 @@ $checkAccessParams['moduleID'] = env('MODULE_BI');
         </div>
     </div>
 </div>
-@include('pages.NPA.modals.modal_pea')
-@endsection
-@section('js')
-<script src="{{ URL::asset('assets/js/custom/NPA.js')}}"></script>
-@endsection

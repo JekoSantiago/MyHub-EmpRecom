@@ -205,12 +205,16 @@ $(document).ready(function() {
                 $(row).css("background-color", "#FCF17F");
             }
 
+            else if(data.EmpAccDate != null && data.AMAppDate == null && data.HRAppDate == null && data.ExecAppDate == null) {
+                $(row).css("background-color", "#F9C181");
+            }
+
             else if(data.NumOfQuestRemain == 0 && data.MonthEvalCommentCount == 3 && data.RecomComment.length>0 && data.Res_Accomp_Answer.length>0 && data.Scope_Answer.length>0 && data.Str_Exp_Answer.length>0) {
                 $(row).css("background-color", "#5CB1FC");
             }
 
             else if(data.HRRateStatus == 1 && data.NumOfQuestRemain > 0) {
-                $(row).css("background-color", "#E4A0AE");
+                // $(row).css("background-color", "#E4A0AE");
             }
 
         },
@@ -422,12 +426,16 @@ $(document).ready(function() {
                 $(row).css("background-color", "#FCF17F");
             }
 
+            else if(data.EmpAccDate != null) {
+                $(row).css("background-color", "#F9C181");
+            }
+
             else if(data.HRRateStatus == 1 && data.NumOfQuestRemain == 0) {
                 $(row).css("background-color", "#5CB1FC");
             }
 
             else if(data.HRRateStatus == 1 && data.NumOfQuestRemain > 0) {
-                $(row).css("background-color", "#E4A0AE");
+                // $(row).css("background-color", "#E4A0AE");
             }
         },
         initComplete: function(row) {
@@ -438,7 +446,7 @@ $(document).ready(function() {
                 tbl_pea_approval.column(1).visible(false);
             }
 
-          }
+        }
 
     });
 

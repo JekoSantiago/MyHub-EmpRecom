@@ -14,7 +14,7 @@ class PEA extends Model
 
     public static function getPEAFiled2($data)
     {
-        return DB::select('sp_PEA_Filed_Get ?' , $data);
+        return DB::select('sp_PEA_Filed_Get ?, ?' , $data);
     }
 
     public static function getEmp($data)

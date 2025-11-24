@@ -1,4 +1,4 @@
-<div id="modal_pea" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="modal_npa" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
             <div class="modal-header">

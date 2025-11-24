@@ -9,7 +9,7 @@ class NPA extends Model
 {
     public static function getNPA($data)
     {
-        return DB::select('sp_NPA_get ?,?,?,?,?,?,?', $data);
+        return DB::select('sp_NPA_get ?,?,?,?,?,?,?,?', $data);
     }
 
     public static function getNPARec($data)

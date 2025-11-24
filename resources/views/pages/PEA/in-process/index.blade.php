@@ -4,7 +4,6 @@
 
 
 <div class="container-fluid">
-
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
@@ -18,7 +17,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -62,7 +60,6 @@
                                 <div class="col-md-12 pt-3">
                                     <button type="button" id="BtnFilterSubmit" class="btn btn-info waves-effect waves-light mb-2 mr-1"><i class="mdi mdi-magnify mr-1"></i>Search</button>
                                     <button type="button" id="BtnFilterReset" class="btn btn-secondary waves-effect waves-light mb-2"><i class="mdi mdi-restart"></i></button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -70,12 +67,12 @@
             </div>
         </div>
     </div>
-
     {{-- Legend --}}
     <div>
         <table class="table table-bordered w-100 h-1 nowrap " id="legendcolor" style="height: 1%">
-            <th style="background-color: rgb(231,161,176)">HR - Rated</th>
+            {{-- <th style="background-color: rgb(231,161,176)">HR - Rated</th> --}}
             <th style="background-color: rgb(92,179,255)">AC - Rated</th>
+            <th style="background-color: rgb(252, 195, 130)">EMP - Accepted</th>
             <th style="background-color: rgb(255,243,128)">AM - Rated</th>
             <th style="background-color: rgb(200,162,200)">HR - Approved</th>
             <th style="background-color: rgb(188,233,84)">BM - Approved</th>

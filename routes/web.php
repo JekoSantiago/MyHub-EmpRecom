@@ -3,6 +3,7 @@
 use App\Helper\MyHelper;
 use App\Mail\MyTestMail;
 use App\Mail\TestMail;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\CrapIndex;
@@ -37,6 +38,11 @@ Route::any('/BI-Approval','PageController@BIapproval')->name('BI_Approval');
 Route::any('/Non-Reg','PageController@NonReg')->name('NonReg');
 Route::any('/NPA','PageController@NPA')->name('NPA');
 Route::any('/Probi','PageController@Probi')->name('Probi');
+Route::any('/PEA-Accept','PageController@PEAAccept')->name('PEA_Accept');
+Route::any('/NPA-Accept','PageController@NPAAccept')->name('NPA_Accept');
+Route::any('/NonReg-Accept','PageController@NonRegAccept')->name('NonReg_Accept');
+
+
 
 
 
@@ -96,8 +102,38 @@ Route::any('/RPT-NonReg','ReportController@showRPTNonReg')->name('RPT_NR');
 Route::any('/RPT-BI','ReportController@showRPTBI')->name('RPT_BI');
 
 
-Route::get('/zxc',function(){
-    DD(Myhelper::decrypt(Session::get('PositionLevel_ID')));
+//ACCEPTANCE
+Route::post('/pea-accepptanceDT','AcceptanceController@getPEAAcceptance');
+Route::get('/accept-showPEA/{id}','AcceptanceController@showPEA');
+Route::post('/emppin-check','AcceptanceController@getEmpPIN');
+Route::post('/accept-pea','AcceptanceController@insertApprovedFile');
+Route::post('/npa-accepptanceDT','AcceptanceController@getNPAAcceptance');
+Route::get('/accept-showNPA/{id}','AcceptanceController@showNPA');
+Route::post('/accept-npa','AcceptanceController@acceptNPA');
+Route::post('/nonreg-accepptanceDT','AcceptanceController@getNonRegAcceptance');
+Route::post('/accept-nonreg','AcceptanceController@acceptNonReg');
+
+
+Route::post('/test',function(){
+
+    $username = 114;
+    $password = 1212;
+
+    $method = 'aes-256-cbc';
+    $hashed = substr(hash('sha256', $password, true), 0, 32);
+    dd($hashed);
+    $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) .
+          chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) .
+          chr(0x0) .chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) .
+          chr(0x0);
+    $password = base64_encode(openssl_encrypt($username, $method, $hashed, OPENSSL_RAW_DATA, $iv));
+
+    return $password;
 });
+
+
+
+
+
 
 

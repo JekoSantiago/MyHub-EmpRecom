@@ -288,5 +288,7 @@ $(document).ready(function() {
         $('.select2').val(null).trigger('change');
     });
 
+
+
 //
 })

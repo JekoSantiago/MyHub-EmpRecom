@@ -29,8 +29,8 @@ $(document).ready(function() {
                                         confirmButtonColor: '#3085d6',
                                         allowOutsideClick: false,
                                     }).then((result) => {
-                                          location.reload();
-                                      });
+                                        location.reload();
+                                    });
                                 }
                                 else
                                 {
@@ -92,8 +92,8 @@ $(document).ready(function() {
                                         confirmButtonColor: '#3085d6',
                                         allowOutsideClick: false,
                                     }).then((result) => {
-                                          location.reload();
-                                      });
+                                            location.reload();
+                                    });
                                 }
                                 else
                                 {

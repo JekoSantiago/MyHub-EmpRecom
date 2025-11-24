@@ -17,6 +17,7 @@ class NonRegController extends Controller
             $request -> employeeName ? : '',
             $request -> department ? : 0,
             $request -> position ? : 0,
+            0,
             0
         ];
 

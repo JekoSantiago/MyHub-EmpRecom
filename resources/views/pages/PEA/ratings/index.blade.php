@@ -25,7 +25,11 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
         <a href="{{ route('RPT_PEA', ['Filed_ID' => request()->segment(2)]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C8F4F;">PEA</button> </a>&nbsp;
         @endif
         @if ($showNPA == 1 && MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
-        <a href="{{ route('RPT_NPA',['Employee_ID' => $emp[0]->Employee_ID]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C788F;">NPA</button></a> &nbsp;
+            @if($npa[0]->ApprovedBy != null)
+                <a href="{{ route('RPT_NPA',['Employee_ID' => $emp[0]->Employee_ID]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #2C788F;">NPA</button></a> &nbsp;
+            @else
+                <button type="button" data-toggle="modal" data-target="#modal_npa_status"  class="btn btn-lg btn-outline-light" style="background-color: #2C788F;">NPA</button> &nbsp;
+            @endif
         @endif
         @if ($showBI == 1 && MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
         <a href="{{ route('RPT_BI',['Employee_ID' => $emp[0]->Employee_ID]) }}" target="_blank"><button type="button" class="btn btn-lg btn-outline-light" style="background-color: #8F2C3E;">BI</button></a> &nbsp;
@@ -296,7 +300,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
 
 </form>
 
-<div class="container-fluid pt-3" id="recomForm" @if($emp[0]->TotalPoint <= env('PASSING ')) style="display: none" @endif>
+<div class="container-fluid pt-3" id="recomForm" @if($emp[0]->TotalPoint <= env('PASSING')) style="display: none" @endif>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -397,6 +401,9 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
     </div>
 </div>
 @include('pages.PEA.ratings.modal.comment')
+@if($showNPA == 1)
+    @include('pages.PEA.ratings.modal.npa_status')
+@endif
 @endsection
 @section('js')
 <script src="{{ URL::asset('assets/js/custom/ratings.js')}}"></script>

@@ -11,8 +11,9 @@
                         <span> Home </span>
                     </a>
                 </li>
-                @php $checkAccessParams['userAccess'] = Session::get('UserAccess');
-                     $checkAccessParams['moduleID'] = env('MODULE_PEA');
+                @php
+                    $checkAccessParams['userAccess'] = Session::get('UserAccess');
+                    $checkAccessParams['moduleID'] = env('MODULE_PEA');
                 @endphp
                 @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ALL')]) || MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_VIEW')]) || MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_EDIT')] || MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ADD')]) )  )
                 <li>
@@ -157,8 +158,31 @@
                     </a>
                 </li>
                 @endif
-
-
+                @php
+                $checkAccessParams['moduleID'] = env('MODULE_ACCEPTANCE');
+                @endphp
+                @if(MyHelper::checkUserAccess($checkAccessParams,[env('APP_ACTION_ALL')]))
+                <li>
+                    <a href="#sidebarAccept" data-toggle="collapse" aria-expanded="false" >
+                        <i class="mdi mdi-check"></i>
+                        <span class="menu-collapsed">Acceptance</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse sidebar-submenu" id="sidebarAccept" style="">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{route('PEA_Accept')}}" class="menu-collapsed">PEA</a>
+                            </li>
+                            <li>
+                                <a href="{{route('NPA_Accept')}}" class="menu-collapsed">NPA</a>
+                            </li>
+                            <li>
+                                <a href="{{route('NonReg_Accept')}}" class="menu-collapsed">Non Reg</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endif
             </ul>
         </div>
         <div class="clearfix"></div>

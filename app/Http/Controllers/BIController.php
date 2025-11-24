@@ -33,12 +33,9 @@ class BIController extends Controller
             0,
             $id
         ];
-
         $emp = BI::getBI($param);
         $data['emp']=$emp;
-
         return view('pages.BI.filing.index',$data);
-
     }
 
     public function insertBI(Request $request)

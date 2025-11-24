@@ -93,6 +93,7 @@ class PEAController extends Controller
 
     public function ratePEA($id)
     {
+
         $userID = MyHelper::decrypt(Session::get('Employee_ID'));
 
         $param = [
@@ -105,24 +106,27 @@ class PEAController extends Controller
         ];
         $data['title'] = 'Ratings';
         $emp = PEA::getPEAFiled2($param);
-        dump($emp);
         $empID = $emp[0]->Employee_ID;
         $rating = PEA::getRatings([$id]);
         $bi = BI::getBIApproval([1,'',0,0,'','',0,$empID]);
         $nr = NonReg::getNonReg([1,'',0,0,0,$empID]);
         $showNPA = 0;
         $npaEmp =[];
+
         if(MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID'))
         {
             $npa = NPA::getNPA([1,$userID,'','','',0,0,$empID]);
+
             foreach($npa as $empNPA)
             {
-                if($empNPA->ApprovedDate != null)
+                if($empNPA->DateRecommended != null)
                 {
                     array_push($npaEmp,$empNPA->Employee_ID);
                 }
             }
             $showNPA = in_array($emp[0]->Employee_ID,$npaEmp) ? 1 : 0;
+
+            $data['npa'] = $npa;
         }
         $biEmp = [];
         $nrEmp = [];
@@ -139,7 +143,6 @@ class PEAController extends Controller
             array_push($nrEmp,$empNR->Employee_ID);
         }
         $showBI = in_array($emp[0]->Employee_ID,$biEmp) ? 1 : 0;
-
         if($emp[0]->TotalPoint >= 90)
         {
             $showNR = ($emp[0]->ExecAppDate != null) ? 1 : 0;
@@ -159,11 +162,13 @@ class PEAController extends Controller
         $data['showNR'] = $showNR;
         $data['showNPA'] = $showNPA;
 
+
         // dd($nrEmp);
         $isHRRated = (intval($emp[0]->HRRateStatus));
         $isHR = (MyHelper::decrypt(Session::get('Department_ID')) == env('HR_DEPT_ID')) ? 1:0;
         $isDisApp = (intval($emp[0]->isdisApproved) ? : 0) ;
         $isApproved = (intval($emp[0]->AMAppDate) ? 1 : 0) ;
+        $isAccepted = (intval($emp[0]->EmpAccDate) ? 1 : 0) ;
 
         $Qremain = $emp[0]->NumOfQuestRemain;
 
@@ -183,14 +188,14 @@ class PEAController extends Controller
 
         // dd($ApproveType);
 
-
         JavaScriptFacade::put([
             'isHR' =>  $isHR,
             'isHRRated' => $isHRRated,
             'ApproveType' => $ApproveType,
             'Qremain' => intval($Qremain),
             'isDisApp' => $isDisApp,
-            'isApproved' => $isApproved
+            'isApproved' => $isApproved,
+            'isAccepted' => $isAccepted
         ]);
 
         return view ('pages.PEA.ratings.index', $data);

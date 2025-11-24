@@ -84,7 +84,7 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
                 <div class="card-body">
                     <div class="row mb-1 text-center">
                         <div class="col">
-                            @if (MyHelper::decrypt(Session::get('PositionLevel_ID'))<=2) <button type="button" class="btn btn-success" name="btnApprove" id="btnApprove">Approve</button> @endif
+                            @if (MyHelper::decrypt(Session::get('PositionLevel_ID'))<=2 || MyHelper::decrypt(Session::get('Employee_ID')) == 4056) <button type="button" class="btn btn-success" name="btnApprove" id="btnApprove">Approve</button> @endif
                          </div>
                     </div>
                     <table id="tbl_npa" class="table table-centered w-100 nowrap">

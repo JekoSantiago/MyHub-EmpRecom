@@ -114,8 +114,9 @@ $checkAccessParams['moduleID'] = env('MODULE_PEA');
     {{-- Legend --}}
     <div>
         <table class="table table-bordered w-100 h-1 nowrap " id="legendcolor" style="height: 1%">
-            <th style="background-color: rgb(231,161,176)">HR - Rated</th>
+            {{-- <th style="background-color: rgb(231,161,176)">HR - Rated</th> --}}
             <th style="background-color: rgb(92,179,255)">AC - Rated</th>
+            <th style="background-color: rgb(252, 195, 130)">EMP - Accepted</th>
             <th style="background-color: rgb(255,243,128)">AM - Rated</th>
             <th style="background-color: rgb(200,162,200)">HR - Approved</th>
             <th style="background-color: rgb(188,233,84)">BM - Approved</th>

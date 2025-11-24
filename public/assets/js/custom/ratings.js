@@ -4,8 +4,8 @@ $(document).ready(function() {
     var hideComm;
     var FiledID = $('#FiledID').val();
 
-    console.log(isApproved,ApproveType,isDisApp,Qremain,isHR);
-    if(isApproved == 1 && Qremain ==0 )
+    console.log(isApproved,ApproveType,isDisApp,Qremain,isHR,isAccepted);
+    if(isApproved == 1 && Qremain <= 0  || isAccepted == 1)
     {
         $(".rad_1").attr('disabled',true);
         $(".rad_2").attr('disabled',true);
@@ -97,7 +97,7 @@ $(document).ready(function() {
 
         }
 
-        if(Qremain == 0)
+        if(Qremain <= 0)
         {
             hideComm = 0;
         }
@@ -187,7 +187,7 @@ $(document).ready(function() {
                             $('#recomForm').hide();
                         }
 
-                        if(data.qremain == 0)
+                        if(data.qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -221,7 +221,7 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
-                        if(data.qremain == 0)
+                        if(data.qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -243,7 +243,7 @@ $(document).ready(function() {
                                 {
                                     $('#recomForm').hide();
                                 }
-                                if(data.qremain == 0)
+                                if(data.qremain <= 0)
                                 {
                                     $('#com_1').show();
                                 }
@@ -300,7 +300,7 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
-                        if(data.qremain == 0)
+                        if(data.Qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -334,7 +334,7 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
-                        if(data.qremain == 0)
+                        if(data.Qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -355,7 +355,7 @@ $(document).ready(function() {
                                 {
                                     $('#recomForm').hide();
                                 }
-                                if(data.qremain == 0)
+                                if(data.Qremain <= 0)
                                 {
                                     $('#com_1').show();
                                 }
@@ -412,7 +412,7 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
-                        if(data.qremain == 0)
+                        if(data.Qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -446,7 +446,7 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
-                        if(data.qremain == 0)
+                        if(data.Qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -467,7 +467,7 @@ $(document).ready(function() {
                                 {
                                     $('#recomForm').hide();
                                 }
-                                if(data.qremain == 0)
+                                if(data.Qremain <= 0)
                                 {
                                     $('#com_1').show();
                                 }
@@ -524,7 +524,7 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
-                        if(data.qremain == 0)
+                        if(data.Qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -545,7 +545,7 @@ $(document).ready(function() {
                                 {
                                     $('#recomForm').hide();
                                 }
-                                if(data.qremain == 0)
+                                if(data.Qremain <= 0)
                                 {
                                     $('#com_1').show();
                                 }
@@ -592,7 +592,7 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
-                        if(data.qremain == 0)
+                        if(data.Qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -613,7 +613,7 @@ $(document).ready(function() {
                                 {
                                     $('#recomForm').hide();
                                 }
-                                if(data.qremain == 0)
+                                if(data.Qremain <= 0)
                                 {
                                     $('#com_1').show();
                                 }
@@ -670,7 +670,7 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
-                        if(data.qremain == 0)
+                        if(data.Qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -704,7 +704,7 @@ $(document).ready(function() {
                         {
                             $('#recomForm').hide();
                         }
-                        if(data.qremain == 0)
+                        if(data.Qremain <= 0)
                         {
                             $('#com_1').show();
                         }
@@ -725,7 +725,7 @@ $(document).ready(function() {
                                 {
                                     $('#recomForm').hide();
                                 }
-                                if(data.qremain == 0)
+                                if(data.Qremain <= 0)
                                 {
                                     $('#com_1').show();
                                 }

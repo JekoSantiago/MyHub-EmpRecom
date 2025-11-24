@@ -16,7 +16,7 @@ class Common extends Model
         $moduleID         = $data['moduleID'];
         $roleID           = $data['roleID'];
 
-        $result = DB::select('UserMgt.dbo.sp_User_ModuleRole_Get ?,?,?,?', [$moduleRoleID,$appID,$moduleID,$roleID]);
+        $result = DB::select('UserMgt_prd.dbo.sp_User_ModuleRole_Get ?,?,?,?', [$moduleRoleID,$appID,$moduleID,$roleID]);
         return $result;
     }
 
@@ -39,5 +39,6 @@ class Common extends Model
    {
        return DB::select('sp_Department_get');
    }
+
 
 }

@@ -4,6 +4,8 @@ namespace App\Helper;
 
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Session;
+
 class MyHelper
 {
 
@@ -96,14 +98,11 @@ class MyHelper
     public static function passwordEncrypt($username,$password)
     {
         $method = 'aes-256-cbc';
-        // Must be exact 32 chars (256 bit)
         $hashed = substr(hash('sha256', $password, true), 0, 32);
-        // IV must be exact 16 chars (128 bit)
         $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) .
               chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) .
               chr(0x0) .chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) .
               chr(0x0);
-        // av3DYGLkwBsErphcyYp+imUW4QKs19hUnFyyYcXwURU=
         $password = base64_encode(openssl_encrypt($username, $method, $hashed, OPENSSL_RAW_DATA, $iv));
 
         return $password;
@@ -130,6 +129,32 @@ class MyHelper
         {
             return false;
         }
+    }
+
+    public static function checkSession()
+    {
+        if(Session::has('UserAccess'))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static function generateQM($data)
+    {
+        $totalParams = count($data);
+        if($totalParams == 0):
+        return '';
+        else:
+        $param = '';
+            foreach($data as $d):
+            $param.='?,';
+            endforeach;
+        return substr($param, 0, -1);
+        endif;
     }
 }
 

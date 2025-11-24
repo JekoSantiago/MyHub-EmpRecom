@@ -49,6 +49,8 @@
                 <div class="card-body">
                     <form id="form_ratings">
                         <input type="hidden" name="FiledID" id="FiledID" value="{{ $emp[0]->Filed_ID }}">
+                        <input type="hidden" name="EmpID" id="EmpID" value="{{ $emp[0]->Employee_ID }}">
+                        <input type="hidden" name="EmpNo" id="EmpNo" value="{{ $emp[0]->EmployeeNo }}">
                         <input type="hidden" name="_token" id="globalToken" value="{{csrf_token()}}" />
                     </form>
                     <table id="tbl_emp_ratings" class="table table-bordered w-100 nowrap">
@@ -273,12 +275,19 @@
                             <textarea name="SnE" id="SnE" cols="30" rows="6" class="form-control" form="form_emp_profile">{{ $emp[0]->Str_Exp_Answer }}</textarea>
                             <label class="invalid-feedback" id="SnE_error">Please fill up the field</label>
                         </div>
-                        <div class="row pt-2">
+                        <div class="row pt-2 mb-2">
                             <label for="SAR">
                                 Scope of Assignment and Responsibility (Branch/Clusters/Region/Function)
                             </label>
                             <textarea name="SAR" id="SAR" cols="30" rows="6" class="form-control" form="form_emp_profile">{{ $emp[0]->Scope_Answer }}</textarea>
                             <label class="invalid-feedback" id="SAR_error">Please fill up the field</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                @if($emp[0]->EmpAccDate == NULL )
+                                    <button type="button" class="btn btn-success" name="btnAcceptPEA" id="btnAcceptPEA">Accept</button>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -287,7 +296,7 @@
     </div>
 </div>
 
-<div class="container-fluid pt-3">
+{{-- <div class="container-fluid pt-3">
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -316,4 +325,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}

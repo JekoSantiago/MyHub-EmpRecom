@@ -30,8 +30,6 @@ class AuthController extends Controller
 
         $userDetails = UserDetails::getUserDetails($userEmpID);
 
-        // dd($userDetails);
-        // DD($userDetails);
         if(count($userDetails) > 0)
         {
             $data['moduleRoleID'] = 0;
@@ -57,16 +55,18 @@ class AuthController extends Controller
                 Session::put('Department_ID',    MyHelper::encrypt($userDetails[0]->Department_ID));
                 Session::put('Department',       MyHelper::encrypt($userDetails[0]->Department));
                 Session::put('Email',            MyHelper::encrypt($userDetails[0]->Email));
-                Session::put('Location_ID',      MyHelper::encrypt($userDetails[0]->Location_ID));
-                Session::put('Location',         MyHelper::encrypt($userDetails[0]->Location));
+                Session::put('Location_ID',      MyHelper::encrypt($userDetails[0]->SLocation_ID));
+                Session::put('Location',         MyHelper::encrypt($userDetails[0]->SLocation));
                 Session::put('PositionLevel_ID', MyHelper::encrypt($userDetails[0]->PositionLevel_ID));
                 Session::save();
+
             return redirect(route('home'));
-            }
-            else
-            {
+
+        }
+        else
+        {
             return  redirect('/error/401');
-            }
+        }
 
 
     }

@@ -23,7 +23,7 @@ $(document).ready(function() {
         $.session.clear();
     })
 
-
+    $.fn.modal.Constructor.prototype._enforceFocus = function() {};
 
     $.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) {
         console.log(message);

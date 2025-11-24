@@ -21,6 +21,7 @@ class NPAController extends Controller
             $request -> position,
             0,
             MyHelper::decrypt(Session::get('Employee_ID')),
+            0,
         ];
 
         // dd($param);
@@ -73,14 +74,17 @@ class NPAController extends Controller
         $data['emp'] = $emp;
         $data['AppEnable'] = $AppEnable;
 
+
+
         return view('pages.NPA.forms.NPA_form', $data);
+
     }
 
     public function showPEA($id)
     {
-
         $data['title'] = 'Ratings';
-        $emp = PEA::getPEAFiled2([$id]);
+        $userID = MyHelper::decrypt(Session::get('Employee_ID'));
+        $emp = PEA::getPEAFiled2([$id,$userID]);
         $rating = PEA::getRatings([$id]);
         $comment = PEA::getMonthlyComment([$id]);
 
@@ -93,6 +97,7 @@ class NPAController extends Controller
         $data['comment'] = $comment;
 
         return view ('pages.NPA.modals.content.modal_pea', $data);
+
     }
 
     public function approveNPA(Request $request)
